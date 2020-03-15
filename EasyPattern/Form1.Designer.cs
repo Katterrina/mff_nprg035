@@ -36,6 +36,24 @@
             this.welcome = new System.Windows.Forms.Panel();
             this.next1 = new System.Windows.Forms.Button();
             this.measures = new System.Windows.Forms.Panel();
+            this.patternChoice = new System.Windows.Forms.Panel();
+            this.doPattern = new System.Windows.Forms.Button();
+            this.backWelcome = new System.Windows.Forms.Button();
+            this.patternToDo = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.len_knee = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.circ_sleeve = new System.Windows.Forms.NumericUpDown();
+            this.circ_neck = new System.Windows.Forms.NumericUpDown();
+            this.len_breast = new System.Windows.Forms.NumericUpDown();
+            this.len_front = new System.Windows.Forms.NumericUpDown();
+            this.len_sleeve = new System.Windows.Forms.NumericUpDown();
+            this.len_shoulder = new System.Windows.Forms.NumericUpDown();
+            this.wid_back = new System.Windows.Forms.NumericUpDown();
+            this.len_back = new System.Windows.Forms.NumericUpDown();
+            this.circ_hips = new System.Windows.Forms.NumericUpDown();
+            this.circ_waist = new System.Windows.Forms.NumericUpDown();
+            this.circ_bust = new System.Windows.Forms.NumericUpDown();
             this.height = new System.Windows.Forms.NumericUpDown();
             this.nameAndNoteMeasures = new System.Windows.Forms.Panel();
             this.noteDataSet = new System.Windows.Forms.Label();
@@ -57,35 +75,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.circ_bust = new System.Windows.Forms.NumericUpDown();
-            this.circ_waist = new System.Windows.Forms.NumericUpDown();
-            this.circ_hips = new System.Windows.Forms.NumericUpDown();
-            this.len_back = new System.Windows.Forms.NumericUpDown();
-            this.wid_back = new System.Windows.Forms.NumericUpDown();
-            this.len_shoulder = new System.Windows.Forms.NumericUpDown();
-            this.len_sleeve = new System.Windows.Forms.NumericUpDown();
-            this.len_front = new System.Windows.Forms.NumericUpDown();
-            this.len_breast = new System.Windows.Forms.NumericUpDown();
-            this.circ_neck = new System.Windows.Forms.NumericUpDown();
-            this.circ_sleeve = new System.Windows.Forms.NumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
-            this.len_knee = new System.Windows.Forms.NumericUpDown();
             this.welcome.SuspendLayout();
             this.measures.SuspendLayout();
+            this.patternChoice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.len_knee)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_neck)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_breast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_front)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_sleeve)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_shoulder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wid_back)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_back)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_hips)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_waist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_bust)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.height)).BeginInit();
             this.nameAndNoteMeasures.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_bust)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_waist)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_hips)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_back)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wid_back)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_shoulder)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_sleeve)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_front)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_breast)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_neck)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_knee)).BeginInit();
             this.SuspendLayout();
             // 
             // choiceMeasuresSet
@@ -199,9 +205,214 @@
             this.measures.Size = new System.Drawing.Size(963, 530);
             this.measures.TabIndex = 7;
             // 
+            // patternChoice
+            // 
+            this.patternChoice.Controls.Add(this.doPattern);
+            this.patternChoice.Controls.Add(this.backWelcome);
+            this.patternChoice.Controls.Add(this.patternToDo);
+            this.patternChoice.Controls.Add(this.label15);
+            this.patternChoice.Location = new System.Drawing.Point(12, 78);
+            this.patternChoice.Name = "patternChoice";
+            this.patternChoice.Size = new System.Drawing.Size(963, 533);
+            this.patternChoice.TabIndex = 8;
+            // 
+            // doPattern
+            // 
+            this.doPattern.Location = new System.Drawing.Point(852, 507);
+            this.doPattern.Name = "doPattern";
+            this.doPattern.Size = new System.Drawing.Size(111, 23);
+            this.doPattern.TabIndex = 4;
+            this.doPattern.Text = "Vygenerovat střih";
+            this.doPattern.UseVisualStyleBackColor = true;
+            // 
+            // backWelcome
+            // 
+            this.backWelcome.Location = new System.Drawing.Point(0, 507);
+            this.backWelcome.Name = "backWelcome";
+            this.backWelcome.Size = new System.Drawing.Size(109, 23);
+            this.backWelcome.TabIndex = 3;
+            this.backWelcome.Text = "Zpět na začátek";
+            this.backWelcome.UseVisualStyleBackColor = true;
+            this.backWelcome.Click += new System.EventHandler(this.backWelcome_Click);
+            // 
+            // patternToDo
+            // 
+            this.patternToDo.FormattingEnabled = true;
+            this.patternToDo.Items.AddRange(new object[] {
+            "košile",
+            "halenka",
+            "sukně",
+            "šaty"});
+            this.patternToDo.Location = new System.Drawing.Point(406, 193);
+            this.patternToDo.Name = "patternToDo";
+            this.patternToDo.Size = new System.Drawing.Size(121, 21);
+            this.patternToDo.TabIndex = 1;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(433, 165);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(69, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Vyberte střih:";
+            // 
+            // len_knee
+            // 
+            this.len_knee.Location = new System.Drawing.Point(440, 420);
+            this.len_knee.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.len_knee.Name = "len_knee";
+            this.len_knee.Size = new System.Drawing.Size(100, 20);
+            this.len_knee.TabIndex = 32;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(312, 427);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(122, 13);
+            this.label13.TabIndex = 31;
+            this.label13.Text = "Délka od pasu ke koleni";
+            // 
+            // circ_sleeve
+            // 
+            this.circ_sleeve.Location = new System.Drawing.Point(440, 394);
+            this.circ_sleeve.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.circ_sleeve.Name = "circ_sleeve";
+            this.circ_sleeve.Size = new System.Drawing.Size(100, 20);
+            this.circ_sleeve.TabIndex = 12;
+            // 
+            // circ_neck
+            // 
+            this.circ_neck.Location = new System.Drawing.Point(440, 368);
+            this.circ_neck.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.circ_neck.Name = "circ_neck";
+            this.circ_neck.Size = new System.Drawing.Size(100, 20);
+            this.circ_neck.TabIndex = 11;
+            // 
+            // len_breast
+            // 
+            this.len_breast.Location = new System.Drawing.Point(440, 342);
+            this.len_breast.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.len_breast.Name = "len_breast";
+            this.len_breast.Size = new System.Drawing.Size(100, 20);
+            this.len_breast.TabIndex = 10;
+            // 
+            // len_front
+            // 
+            this.len_front.Location = new System.Drawing.Point(440, 316);
+            this.len_front.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.len_front.Name = "len_front";
+            this.len_front.Size = new System.Drawing.Size(100, 20);
+            this.len_front.TabIndex = 9;
+            // 
+            // len_sleeve
+            // 
+            this.len_sleeve.Location = new System.Drawing.Point(440, 290);
+            this.len_sleeve.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.len_sleeve.Name = "len_sleeve";
+            this.len_sleeve.Size = new System.Drawing.Size(100, 20);
+            this.len_sleeve.TabIndex = 8;
+            // 
+            // len_shoulder
+            // 
+            this.len_shoulder.Location = new System.Drawing.Point(440, 264);
+            this.len_shoulder.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.len_shoulder.Name = "len_shoulder";
+            this.len_shoulder.Size = new System.Drawing.Size(100, 20);
+            this.len_shoulder.TabIndex = 7;
+            // 
+            // wid_back
+            // 
+            this.wid_back.Location = new System.Drawing.Point(440, 238);
+            this.wid_back.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.wid_back.Name = "wid_back";
+            this.wid_back.Size = new System.Drawing.Size(100, 20);
+            this.wid_back.TabIndex = 6;
+            // 
+            // len_back
+            // 
+            this.len_back.Location = new System.Drawing.Point(440, 212);
+            this.len_back.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.len_back.Name = "len_back";
+            this.len_back.Size = new System.Drawing.Size(100, 20);
+            this.len_back.TabIndex = 5;
+            // 
+            // circ_hips
+            // 
+            this.circ_hips.Location = new System.Drawing.Point(440, 186);
+            this.circ_hips.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.circ_hips.Name = "circ_hips";
+            this.circ_hips.Size = new System.Drawing.Size(100, 20);
+            this.circ_hips.TabIndex = 4;
+            // 
+            // circ_waist
+            // 
+            this.circ_waist.Location = new System.Drawing.Point(440, 160);
+            this.circ_waist.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.circ_waist.Name = "circ_waist";
+            this.circ_waist.Size = new System.Drawing.Size(100, 20);
+            this.circ_waist.TabIndex = 3;
+            // 
+            // circ_bust
+            // 
+            this.circ_bust.Location = new System.Drawing.Point(440, 134);
+            this.circ_bust.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.circ_bust.Name = "circ_bust";
+            this.circ_bust.Size = new System.Drawing.Size(100, 20);
+            this.circ_bust.TabIndex = 2;
+            // 
             // height
             // 
-            this.height.Location = new System.Drawing.Point(187, 158);
+            this.height.Location = new System.Drawing.Point(440, 108);
             this.height.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -216,7 +427,7 @@
             this.nameAndNoteMeasures.Controls.Add(this.noteDataSet);
             this.nameAndNoteMeasures.Controls.Add(this.label14);
             this.nameAndNoteMeasures.Controls.Add(this.nameOfDataSet);
-            this.nameAndNoteMeasures.Location = new System.Drawing.Point(30, 53);
+            this.nameAndNoteMeasures.Location = new System.Drawing.Point(283, 3);
             this.nameAndNoteMeasures.Name = "nameAndNoteMeasures";
             this.nameAndNoteMeasures.Size = new System.Drawing.Size(362, 99);
             this.nameAndNoteMeasures.TabIndex = 30;
@@ -252,7 +463,7 @@
             // labelNewMeasures
             // 
             this.labelNewMeasures.AutoSize = true;
-            this.labelNewMeasures.Location = new System.Drawing.Point(105, 131);
+            this.labelNewMeasures.Location = new System.Drawing.Point(358, 81);
             this.labelNewMeasures.Name = "labelNewMeasures";
             this.labelNewMeasures.Size = new System.Drawing.Size(153, 13);
             this.labelNewMeasures.TabIndex = 29;
@@ -260,22 +471,23 @@
             // 
             // save
             // 
-            this.save.Location = new System.Drawing.Point(807, 507);
+            this.save.Location = new System.Drawing.Point(640, 507);
             this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(75, 23);
+            this.save.Size = new System.Drawing.Size(158, 23);
             this.save.TabIndex = 26;
-            this.save.Text = "Uložit míry";
+            this.save.Text = "Uložit míry a pokračovat";
             this.save.UseVisualStyleBackColor = true;
             this.save.Click += new System.EventHandler(this.save_Click);
             // 
             // next2
             // 
-            this.next2.Location = new System.Drawing.Point(888, 507);
+            this.next2.Location = new System.Drawing.Point(804, 507);
             this.next2.Name = "next2";
-            this.next2.Size = new System.Drawing.Size(75, 23);
+            this.next2.Size = new System.Drawing.Size(159, 23);
             this.next2.TabIndex = 25;
-            this.next2.Text = "Vybrat střih";
+            this.next2.Text = "Pokračovat bez uložení";
             this.next2.UseVisualStyleBackColor = true;
+            this.next2.Click += new System.EventHandler(this.next2_Click);
             // 
             // toWlecome
             // 
@@ -285,11 +497,12 @@
             this.toWlecome.TabIndex = 24;
             this.toWlecome.Text = "Zpět";
             this.toWlecome.UseVisualStyleBackColor = true;
+            this.toWlecome.Click += new System.EventHandler(this.toWlecome_Click);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(84, 451);
+            this.label12.Location = new System.Drawing.Point(337, 401);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(97, 13);
             this.label12.TabIndex = 11;
@@ -298,7 +511,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(118, 425);
+            this.label11.Location = new System.Drawing.Point(371, 375);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 10;
@@ -307,7 +520,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(105, 399);
+            this.label10.Location = new System.Drawing.Point(358, 349);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(76, 13);
             this.label10.TabIndex = 9;
@@ -316,7 +529,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(112, 373);
+            this.label9.Location = new System.Drawing.Point(365, 323);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 8;
@@ -325,7 +538,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(110, 347);
+            this.label8.Location = new System.Drawing.Point(363, 297);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(71, 13);
             this.label8.TabIndex = 7;
@@ -334,7 +547,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(109, 321);
+            this.label7.Location = new System.Drawing.Point(362, 271);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 13);
             this.label7.TabIndex = 6;
@@ -343,7 +556,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(127, 295);
+            this.label6.Location = new System.Drawing.Point(380, 245);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 5;
@@ -352,7 +565,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(126, 269);
+            this.label5.Location = new System.Drawing.Point(379, 219);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(55, 13);
             this.label5.TabIndex = 4;
@@ -361,7 +574,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(116, 243);
+            this.label4.Location = new System.Drawing.Point(369, 193);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 3;
@@ -370,7 +583,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(116, 217);
+            this.label3.Location = new System.Drawing.Point(369, 167);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 13);
             this.label3.TabIndex = 2;
@@ -379,7 +592,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(96, 191);
+            this.label2.Location = new System.Drawing.Point(349, 141);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 1;
@@ -388,170 +601,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(105, 165);
+            this.label1.Location = new System.Drawing.Point(358, 115);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Výška postavy";
-            // 
-            // circ_bust
-            // 
-            this.circ_bust.Location = new System.Drawing.Point(187, 184);
-            this.circ_bust.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.circ_bust.Name = "circ_bust";
-            this.circ_bust.Size = new System.Drawing.Size(100, 20);
-            this.circ_bust.TabIndex = 2;
-            // 
-            // circ_waist
-            // 
-            this.circ_waist.Location = new System.Drawing.Point(187, 210);
-            this.circ_waist.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.circ_waist.Name = "circ_waist";
-            this.circ_waist.Size = new System.Drawing.Size(100, 20);
-            this.circ_waist.TabIndex = 3;
-            // 
-            // circ_hips
-            // 
-            this.circ_hips.Location = new System.Drawing.Point(187, 236);
-            this.circ_hips.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.circ_hips.Name = "circ_hips";
-            this.circ_hips.Size = new System.Drawing.Size(100, 20);
-            this.circ_hips.TabIndex = 4;
-            // 
-            // len_back
-            // 
-            this.len_back.Location = new System.Drawing.Point(187, 262);
-            this.len_back.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.len_back.Name = "len_back";
-            this.len_back.Size = new System.Drawing.Size(100, 20);
-            this.len_back.TabIndex = 5;
-            // 
-            // wid_back
-            // 
-            this.wid_back.Location = new System.Drawing.Point(187, 288);
-            this.wid_back.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.wid_back.Name = "wid_back";
-            this.wid_back.Size = new System.Drawing.Size(100, 20);
-            this.wid_back.TabIndex = 6;
-            // 
-            // len_shoulder
-            // 
-            this.len_shoulder.Location = new System.Drawing.Point(187, 314);
-            this.len_shoulder.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.len_shoulder.Name = "len_shoulder";
-            this.len_shoulder.Size = new System.Drawing.Size(100, 20);
-            this.len_shoulder.TabIndex = 7;
-            // 
-            // len_sleeve
-            // 
-            this.len_sleeve.Location = new System.Drawing.Point(187, 340);
-            this.len_sleeve.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.len_sleeve.Name = "len_sleeve";
-            this.len_sleeve.Size = new System.Drawing.Size(100, 20);
-            this.len_sleeve.TabIndex = 8;
-            // 
-            // len_front
-            // 
-            this.len_front.Location = new System.Drawing.Point(187, 366);
-            this.len_front.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.len_front.Name = "len_front";
-            this.len_front.Size = new System.Drawing.Size(100, 20);
-            this.len_front.TabIndex = 9;
-            // 
-            // len_breast
-            // 
-            this.len_breast.Location = new System.Drawing.Point(187, 392);
-            this.len_breast.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.len_breast.Name = "len_breast";
-            this.len_breast.Size = new System.Drawing.Size(100, 20);
-            this.len_breast.TabIndex = 10;
-            // 
-            // circ_neck
-            // 
-            this.circ_neck.Location = new System.Drawing.Point(187, 418);
-            this.circ_neck.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.circ_neck.Name = "circ_neck";
-            this.circ_neck.Size = new System.Drawing.Size(100, 20);
-            this.circ_neck.TabIndex = 11;
-            // 
-            // circ_sleeve
-            // 
-            this.circ_sleeve.Location = new System.Drawing.Point(187, 444);
-            this.circ_sleeve.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.circ_sleeve.Name = "circ_sleeve";
-            this.circ_sleeve.Size = new System.Drawing.Size(100, 20);
-            this.circ_sleeve.TabIndex = 12;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(59, 477);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(122, 13);
-            this.label13.TabIndex = 31;
-            this.label13.Text = "Délka od pasu ke koleni";
-            // 
-            // len_knee
-            // 
-            this.len_knee.Location = new System.Drawing.Point(187, 470);
-            this.len_knee.Maximum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
-            this.len_knee.Name = "len_knee";
-            this.len_knee.Size = new System.Drawing.Size(100, 20);
-            this.len_knee.TabIndex = 32;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 620);
+            this.Controls.Add(this.patternChoice);
             this.Controls.Add(this.measures);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.header);
@@ -561,21 +622,23 @@
             this.welcome.PerformLayout();
             this.measures.ResumeLayout(false);
             this.measures.PerformLayout();
+            this.patternChoice.ResumeLayout(false);
+            this.patternChoice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.len_knee)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_neck)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_breast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_front)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_sleeve)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_shoulder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wid_back)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.len_back)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_hips)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_waist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circ_bust)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.height)).EndInit();
             this.nameAndNoteMeasures.ResumeLayout(false);
             this.nameAndNoteMeasures.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_bust)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_waist)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_hips)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_back)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wid_back)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_shoulder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_sleeve)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_front)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_breast)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_neck)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.len_knee)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -625,6 +688,11 @@
         private System.Windows.Forms.NumericUpDown circ_bust;
         private System.Windows.Forms.NumericUpDown len_knee;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Panel patternChoice;
+        private System.Windows.Forms.ComboBox patternToDo;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button doPattern;
+        private System.Windows.Forms.Button backWelcome;
     }
 }
 
