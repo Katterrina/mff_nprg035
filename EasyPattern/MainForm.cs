@@ -8,19 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
+using System.IO;
 
 namespace EasyPattern
 {
-    public partial class Form1 : Form
+    public struct measures
+    public partial class MainForm : Form
     {
         public readonly string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;
                                              AttachDbFilename=C:\Users\Kateřina\Desktop\C#_zapoctak\EasyPattern\EasyPattern\MeasursDatabase.mdf;
                                              Integrated Security=True";
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             measures.Visible = false;
             patternChoice.Visible = false;
+            viewer.Visible = false;
             loadMeasureChoice();
         }
 
@@ -124,7 +131,7 @@ namespace EasyPattern
 
         private void save_Click(object sender, EventArgs e)
         {
-            Form2 popup = new Form2();
+            SaveDialogForm popup = new SaveDialogForm();
             popup.ShowDialog();
 
             if (popup.DialogResult == DialogResult.Cancel)
@@ -136,37 +143,22 @@ namespace EasyPattern
             {
                 string name = popup.nameOfMSet.Text;
                 string note = popup.note.Text;
-                InsertDataSetToDatabase(name, note, (int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value, (int)circ_hips.Value,
-                    (int)len_back.Value, (int)wid_back.Value, (int)len_knee.Value, (int)len_shoulder.Value,
-                    (int)len_sleeve.Value, (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value, (int)len_breast.Value);
+                PatternGeometry.measures = new MeasuresData();
+                InsertDataSetToDatabase(name, note, PatternGeometry.measures);
             }
 
             measures.Visible = false;
             patternChoice.Visible = true;
         }
 
-        private void InsertDataSetToDatabase(string name, 
-                                            string note, 
-                                            int height,
-                                            int circ_bust, 
-                                            int circ_waist, 
-                                            int circ_hips, 
-                                            int len_back, 
-                                            int wid_back, 
-                                            int len_knee, 
-                                            int len_shoulder,
-                                            int len_sleeve,
-                                            int circ_neck,
-                                            int circ_sleeve,
-                                            int len_front,
-                                            int len_breast)
+        private void InsertDataSetToDatabase(string name, string note, MeasuresData m)
         {
             string sql = $"INSERT INTO MeasuresSets " +
                 $"(name, note, height, circ_bust, circ_waist, circ_hips, len_back, wid_back, len_knee, " +
                 $"len_shoulder, len_sleeve, circ_neck, circ_sleeve, len_front, len_breast)" +
                 $" VALUES " +
-                $"('{name}','{note}',{height},{circ_bust},{circ_waist},{circ_hips},{len_back},{wid_back},{len_knee}," +
-                $"{len_shoulder},{len_sleeve},{circ_neck},{circ_sleeve},{len_front},{len_breast})";
+                $"('{name}','{note}',{m.height},{m.circ_bust},{m.circ_waist},{m.circ_hips},{m.len_back},{m.wid_back},{m.len_knee}," +
+                $"{m.len_shoulder},{m.len_sleeve},{m.circ_neck},{m.circ_sleeve},{m.len_front},{m.len_breast})";
 
             using (SqlConnection con = new SqlConnection(conString))
             {
@@ -197,5 +189,19 @@ namespace EasyPattern
             measures.Visible = false;
             patternChoice.Visible = true;
         }
+
+        private void doPattern_Click(object sender, EventArgs e)
+        {
+            patternChoice.Visible = false;
+            viewer.Visible = true;
+
+
+
+            PdfPage page = PatternGeometry.CreatePdfPage();
+            PatternGeometry.Skirt(700, 300, page);
+
+
+        }
     }
+
 }

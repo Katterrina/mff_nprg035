@@ -1,6 +1,6 @@
 ﻿namespace EasyPattern
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,11 +36,6 @@
             this.welcome = new System.Windows.Forms.Panel();
             this.next1 = new System.Windows.Forms.Button();
             this.measures = new System.Windows.Forms.Panel();
-            this.patternChoice = new System.Windows.Forms.Panel();
-            this.doPattern = new System.Windows.Forms.Button();
-            this.backWelcome = new System.Windows.Forms.Button();
-            this.patternToDo = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.len_knee = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.circ_sleeve = new System.Windows.Forms.NumericUpDown();
@@ -75,9 +70,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.patternChoice = new System.Windows.Forms.Panel();
+            this.doPattern = new System.Windows.Forms.Button();
+            this.backWelcome = new System.Windows.Forms.Button();
+            this.patternToDo = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.viewer = new System.Windows.Forms.Panel();
+            this.pdfToolStripZoomEx1 = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx();
+            this.pdfViewer = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
             this.welcome.SuspendLayout();
             this.measures.SuspendLayout();
-            this.patternChoice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.len_knee)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circ_neck)).BeginInit();
@@ -92,6 +94,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.circ_bust)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.height)).BeginInit();
             this.nameAndNoteMeasures.SuspendLayout();
+            this.patternChoice.SuspendLayout();
+            this.viewer.SuspendLayout();
             this.SuspendLayout();
             // 
             // choiceMeasuresSet
@@ -204,58 +208,6 @@
             this.measures.Name = "measures";
             this.measures.Size = new System.Drawing.Size(963, 530);
             this.measures.TabIndex = 7;
-            // 
-            // patternChoice
-            // 
-            this.patternChoice.Controls.Add(this.doPattern);
-            this.patternChoice.Controls.Add(this.backWelcome);
-            this.patternChoice.Controls.Add(this.patternToDo);
-            this.patternChoice.Controls.Add(this.label15);
-            this.patternChoice.Location = new System.Drawing.Point(12, 78);
-            this.patternChoice.Name = "patternChoice";
-            this.patternChoice.Size = new System.Drawing.Size(963, 533);
-            this.patternChoice.TabIndex = 8;
-            // 
-            // doPattern
-            // 
-            this.doPattern.Location = new System.Drawing.Point(852, 507);
-            this.doPattern.Name = "doPattern";
-            this.doPattern.Size = new System.Drawing.Size(111, 23);
-            this.doPattern.TabIndex = 4;
-            this.doPattern.Text = "Vygenerovat střih";
-            this.doPattern.UseVisualStyleBackColor = true;
-            // 
-            // backWelcome
-            // 
-            this.backWelcome.Location = new System.Drawing.Point(0, 507);
-            this.backWelcome.Name = "backWelcome";
-            this.backWelcome.Size = new System.Drawing.Size(109, 23);
-            this.backWelcome.TabIndex = 3;
-            this.backWelcome.Text = "Zpět na začátek";
-            this.backWelcome.UseVisualStyleBackColor = true;
-            this.backWelcome.Click += new System.EventHandler(this.backWelcome_Click);
-            // 
-            // patternToDo
-            // 
-            this.patternToDo.FormattingEnabled = true;
-            this.patternToDo.Items.AddRange(new object[] {
-            "košile",
-            "halenka",
-            "sukně",
-            "šaty"});
-            this.patternToDo.Location = new System.Drawing.Point(406, 193);
-            this.patternToDo.Name = "patternToDo";
-            this.patternToDo.Size = new System.Drawing.Size(121, 21);
-            this.patternToDo.TabIndex = 1;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(433, 165);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(69, 13);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Vyberte střih:";
             // 
             // len_knee
             // 
@@ -607,23 +559,142 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Výška postavy";
             // 
-            // Form1
+            // patternChoice
+            // 
+            this.patternChoice.Controls.Add(this.doPattern);
+            this.patternChoice.Controls.Add(this.backWelcome);
+            this.patternChoice.Controls.Add(this.patternToDo);
+            this.patternChoice.Controls.Add(this.label15);
+            this.patternChoice.Location = new System.Drawing.Point(12, 78);
+            this.patternChoice.Name = "patternChoice";
+            this.patternChoice.Size = new System.Drawing.Size(963, 533);
+            this.patternChoice.TabIndex = 8;
+            // 
+            // doPattern
+            // 
+            this.doPattern.Location = new System.Drawing.Point(852, 507);
+            this.doPattern.Name = "doPattern";
+            this.doPattern.Size = new System.Drawing.Size(111, 23);
+            this.doPattern.TabIndex = 4;
+            this.doPattern.Text = "Vygenerovat střih";
+            this.doPattern.UseVisualStyleBackColor = true;
+            this.doPattern.Click += new System.EventHandler(this.doPattern_Click);
+            // 
+            // backWelcome
+            // 
+            this.backWelcome.Location = new System.Drawing.Point(0, 507);
+            this.backWelcome.Name = "backWelcome";
+            this.backWelcome.Size = new System.Drawing.Size(109, 23);
+            this.backWelcome.TabIndex = 3;
+            this.backWelcome.Text = "Zpět na začátek";
+            this.backWelcome.UseVisualStyleBackColor = true;
+            this.backWelcome.Click += new System.EventHandler(this.backWelcome_Click);
+            // 
+            // patternToDo
+            // 
+            this.patternToDo.FormattingEnabled = true;
+            this.patternToDo.Items.AddRange(new object[] {
+            "košile",
+            "halenka",
+            "sukně",
+            "šaty"});
+            this.patternToDo.Location = new System.Drawing.Point(406, 193);
+            this.patternToDo.Name = "patternToDo";
+            this.patternToDo.Size = new System.Drawing.Size(121, 21);
+            this.patternToDo.TabIndex = 1;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(433, 165);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(69, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Vyberte střih:";
+            // 
+            // viewer
+            // 
+            this.viewer.Controls.Add(this.pdfToolStripZoomEx1);
+            this.viewer.Controls.Add(this.pdfViewer);
+            this.viewer.Location = new System.Drawing.Point(12, 78);
+            this.viewer.Name = "viewer";
+            this.viewer.Size = new System.Drawing.Size(963, 533);
+            this.viewer.TabIndex = 9;
+            // 
+            // pdfToolStripZoomEx1
+            // 
+            this.pdfToolStripZoomEx1.Location = new System.Drawing.Point(0, 0);
+            this.pdfToolStripZoomEx1.Name = "pdfToolStripZoomEx1";
+            this.pdfToolStripZoomEx1.PdfViewer = null;
+            this.pdfToolStripZoomEx1.Size = new System.Drawing.Size(963, 25);
+            this.pdfToolStripZoomEx1.TabIndex = 1;
+            this.pdfToolStripZoomEx1.Text = "pdfToolStripZoomEx1";
+            this.pdfToolStripZoomEx1.ZoomLevel = new float[] {
+        8.33F,
+        12.5F,
+        25F,
+        33.33F,
+        50F,
+        66.67F,
+        75F,
+        100F,
+        125F,
+        150F,
+        200F,
+        300F,
+        400F,
+        600F,
+        800F};
+            // 
+            // pdfViewer
+            // 
+            this.pdfViewer.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pdfViewer.CurrentIndex = -1;
+            this.pdfViewer.CurrentPageHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
+            this.pdfViewer.Document = null;
+            this.pdfViewer.FormHighlightColor = System.Drawing.Color.Transparent;
+            this.pdfViewer.FormsBlendMode = Patagames.Pdf.Enums.BlendTypes.FXDIB_BLEND_MULTIPLY;
+            this.pdfViewer.LoadingIconText = "Loading...";
+            this.pdfViewer.Location = new System.Drawing.Point(81, 28);
+            this.pdfViewer.MouseMode = Patagames.Pdf.Net.Controls.WinForms.MouseModes.Default;
+            this.pdfViewer.Name = "pdfViewer";
+            this.pdfViewer.OptimizedLoadThreshold = 1000;
+            this.pdfViewer.Padding = new System.Windows.Forms.Padding(10);
+            this.pdfViewer.PageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pdfViewer.PageAutoDispose = true;
+            this.pdfViewer.PageBackColor = System.Drawing.Color.White;
+            this.pdfViewer.PageBorderColor = System.Drawing.Color.Black;
+            this.pdfViewer.PageMargin = new System.Windows.Forms.Padding(10);
+            this.pdfViewer.PageSeparatorColor = System.Drawing.Color.Gray;
+            this.pdfViewer.RenderFlags = ((Patagames.Pdf.Enums.RenderFlags)((Patagames.Pdf.Enums.RenderFlags.FPDF_LCD_TEXT | Patagames.Pdf.Enums.RenderFlags.FPDF_NO_CATCH)));
+            this.pdfViewer.ShowCurrentPageHighlight = true;
+            this.pdfViewer.ShowLoadingIcon = true;
+            this.pdfViewer.ShowPageSeparator = true;
+            this.pdfViewer.Size = new System.Drawing.Size(780, 502);
+            this.pdfViewer.SizeMode = Patagames.Pdf.Net.Controls.WinForms.SizeModes.FitToWidth;
+            this.pdfViewer.TabIndex = 0;
+            this.pdfViewer.TextSelectColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
+            this.pdfViewer.TilesCount = 2;
+            this.pdfViewer.UseProgressiveRender = true;
+            this.pdfViewer.ViewMode = Patagames.Pdf.Net.Controls.WinForms.ViewModes.Vertical;
+            this.pdfViewer.Zoom = 1F;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 620);
+            this.Controls.Add(this.viewer);
             this.Controls.Add(this.patternChoice);
             this.Controls.Add(this.measures);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.header);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Střihovátko";
             this.welcome.ResumeLayout(false);
             this.welcome.PerformLayout();
             this.measures.ResumeLayout(false);
             this.measures.PerformLayout();
-            this.patternChoice.ResumeLayout(false);
-            this.patternChoice.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.len_knee)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circ_neck)).EndInit();
@@ -639,6 +710,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.height)).EndInit();
             this.nameAndNoteMeasures.ResumeLayout(false);
             this.nameAndNoteMeasures.PerformLayout();
+            this.patternChoice.ResumeLayout(false);
+            this.patternChoice.PerformLayout();
+            this.viewer.ResumeLayout(false);
+            this.viewer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -693,6 +768,9 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button doPattern;
         private System.Windows.Forms.Button backWelcome;
+        private System.Windows.Forms.Panel viewer;
+        private Patagames.Pdf.Net.Controls.WinForms.PdfViewer pdfViewer;
+        private Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx pdfToolStripZoomEx1;
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿namespace EasyPattern
 {
-    partial class Form2
+    partial class SaveDialogForm
     {
         /// <summary>
         /// Required designer variable.

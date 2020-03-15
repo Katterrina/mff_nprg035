@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace EasyPattern
 {
-    public partial class Form2 : Form
+    public partial class SaveDialogForm : Form
     {
-        public Form2()
+        public SaveDialogForm()
         {
             InitializeComponent();
         }
