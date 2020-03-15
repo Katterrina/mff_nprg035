@@ -16,7 +16,6 @@ using System.IO;
 
 namespace EasyPattern
 {
-    public struct measures
     public partial class MainForm : Form
     {
         public readonly string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;
@@ -134,21 +133,29 @@ namespace EasyPattern
             SaveDialogForm popup = new SaveDialogForm();
             popup.ShowDialog();
 
-            if (popup.DialogResult == DialogResult.Cancel)
-            {
-                popup.Dispose();
-            }
-
             if (popup.DialogResult == DialogResult.OK)
             {
                 string name = popup.nameOfMSet.Text;
                 string note = popup.note.Text;
-                PatternGeometry.measures = new MeasuresData();
+                PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
+                                                            (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
+                                                            (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value, 
+                                                            (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value, 
+                                                            (int)len_breast.Value);
+
                 InsertDataSetToDatabase(name, note, PatternGeometry.measures);
+
+                measures.Visible = false;
+                patternChoice.Visible = true;
             }
 
-            measures.Visible = false;
-            patternChoice.Visible = true;
+            else
+            {
+                popup.Dispose();
+                MessageBox.Show("Ukládání nebylo dokončeno!", "Neuloženo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
         }
 
         private void InsertDataSetToDatabase(string name, string note, MeasuresData m)
@@ -188,6 +195,12 @@ namespace EasyPattern
         {
             measures.Visible = false;
             patternChoice.Visible = true;
+
+            PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
+                                                            (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
+                                                            (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value,
+                                                            (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
+                                                            (int)len_breast.Value);
         }
 
         private void doPattern_Click(object sender, EventArgs e)
@@ -195,10 +208,8 @@ namespace EasyPattern
             patternChoice.Visible = false;
             viewer.Visible = true;
 
-
-
             PdfPage page = PatternGeometry.CreatePdfPage();
-            PatternGeometry.Skirt(700, 300, page);
+            PatternGeometry.Skirt(page);
 
 
         }

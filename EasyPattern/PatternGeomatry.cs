@@ -58,8 +58,6 @@ namespace EasyPattern
             if (circ_sleeve == 0) { this.circ_sleeve = 22; } else { this.circ_sleeve = circ_sleeve; }
             if (len_front == 0) { this.len_front = 0; } else { this.len_front = len_front; } //TODO len_front
             if (len_breast == 0) { this.len_breast = 0;  } else { this.len_breast = len_breast; } //TODO len_breast
-
-
         }
     }
 
@@ -78,7 +76,7 @@ namespace EasyPattern
             return page;
         }
 
-        public static void Skirt(int length, int up_circ, PdfPage page)
+        public static void Skirt(PdfPage page)
         {
             page.Orientation = PageOrientation.Landscape;
             page.Size = PageSize.A4;
