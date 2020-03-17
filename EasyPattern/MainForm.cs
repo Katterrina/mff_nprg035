@@ -25,9 +25,25 @@ namespace EasyPattern
         {
             InitializeComponent();
             measures.Visible = false;
-            patternChoice.Visible = false;
-            viewer.Visible = false;
+            patternChoicePanel.Visible = false;
+            viewerPanel.Visible = false;
             loadMeasureChoice();
+            loadPatternChoice();
+        }
+
+        private void loadPatternChoice()
+        {
+            patternToDo.DataSource = Enum.GetValues(typeof(PatternGeometry.Pattern))
+                                         .Cast<Enum>()
+                                         .Select(value => new
+                                         {
+                                            (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
+                                            value
+                                         })
+                                         .OrderBy(item => item.value)
+                                         .ToList();
+            patternToDo.DisplayMember = "Description";
+            patternToDo.ValueMember = "value";
         }
 
         private void loadMeasureChoice()
@@ -83,7 +99,7 @@ namespace EasyPattern
                 else
                 {
                     welcome.Visible = false;
-                    patternChoice.Visible = true;
+                    patternChoicePanel.Visible = true;
                 }
                     
             }
@@ -137,16 +153,9 @@ namespace EasyPattern
             {
                 string name = popup.nameOfMSet.Text;
                 string note = popup.note.Text;
-                PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
-                                                            (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
-                                                            (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value, 
-                                                            (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value, 
-                                                            (int)len_breast.Value);
 
+                next2_Click(sender, e);
                 InsertDataSetToDatabase(name, note, PatternGeometry.measures);
-
-                measures.Visible = false;
-                patternChoice.Visible = true;
             }
 
             else
@@ -178,23 +187,30 @@ namespace EasyPattern
             }
         }
 
-        private void toWlecome_Click(object sender, EventArgs e)
+        private void toWelcomeClick()
         {
             measures.Visible = false;
             welcome.Visible = true;
-        }
-
-        private void backWelcome_Click(object sender, EventArgs e)
-        {
-            patternChoice.Visible = false;
-            welcome.Visible = true;
+            patternChoicePanel.Visible = false;
+            viewerPanel.Visible = false;
             loadMeasureChoice();
         }
+
+        private void toWelcome1_Click(object sender, EventArgs e)
+        {
+            toWelcomeClick();
+        }
+
+        private void toWelcome2_Click(object sender, EventArgs e)
+        {
+            toWelcomeClick();
+        }
+
 
         private void next2_Click(object sender, EventArgs e)
         {
             measures.Visible = false;
-            patternChoice.Visible = true;
+            patternChoicePanel.Visible = true;
 
             PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
                                                             (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
@@ -205,14 +221,16 @@ namespace EasyPattern
 
         private void doPattern_Click(object sender, EventArgs e)
         {
-            patternChoice.Visible = false;
-            viewer.Visible = true;
+
+            patternChoicePanel.Visible = false;
+            viewerPanel.Visible = true;
 
             PdfPage page = PatternGeometry.CreatePdfPage();
             PatternGeometry.Skirt(page);
 
-
         }
+
+
     }
 
 }

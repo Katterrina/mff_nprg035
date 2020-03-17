@@ -61,9 +61,16 @@ namespace EasyPattern
         }
     }
 
-    static class PatternGeometry
+    class PatternGeometry
     {
+        public enum Pattern {[Description("sukně")] skirt, 
+                             [Description("šaty")] dress,  
+                             [Description("košile")] shirt,
+                             [Description("bůza")] blouse, 
+                             [Description("rukáv")] sleeve }
+
         public static MeasuresData measures;
+        public static Pattern patternChoiceEnum = new Pattern();
 
         public static PdfPage CreatePdfPage()
         {
