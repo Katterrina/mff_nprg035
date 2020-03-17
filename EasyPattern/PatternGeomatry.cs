@@ -66,25 +66,44 @@ namespace EasyPattern
         public enum Pattern {[Description("sukně")] skirt, 
                              [Description("šaty")] dress,  
                              [Description("košile")] shirt,
-                             [Description("bůza")] blouse, 
+                             [Description("blůza")] blouse, 
                              [Description("rukáv")] sleeve }
 
         public static MeasuresData measures;
-        public static Pattern patternChoiceEnum = new Pattern();
 
-        public static PdfPage CreatePdfPage()
+        public static void PdfPattern(Pattern pattern, string path)
         {
-            PdfDocument s_document = new PdfDocument();
-            s_document.Info.Title = "EasyPattern";
-            s_document.Info.Author = "katte";
-            s_document.Info.Keywords = "sewing pattern";
+            PdfDocument pdfDoc = CreatePdfPage(pattern);
 
-            PdfPage page = s_document.AddPage();
-            return page;
+            switch (pattern)
+            {
+                case Pattern.skirt:
+                    Skirt(pdfDoc);
+                    break;
+                case Pattern.dress:
+                    break;
+                case Pattern.shirt:
+                    break;
+                case Pattern.blouse:
+                    break;
+                case Pattern.sleeve:
+                    break;
+                default:
+                    break;
+            }
+        }
+        static PdfDocument CreatePdfPage(Pattern p)
+        {
+            PdfDocument doc = new PdfDocument();
+            doc.Info.Title = "EasyPattern";
+            doc.Info.Author = "Kateřina Č.";
+            doc.Info.Keywords = p.ToString();
+            return doc;
         }
 
-        public static void Skirt(PdfPage page)
+        static void Skirt(PdfDocument pdfDoc)
         {
+            PdfPage page = pdfDoc.AddPage();
             page.Orientation = PageOrientation.Landscape;
             page.Size = PageSize.A4;
             XGraphics gfx = XGraphics.FromPdfPage(page);

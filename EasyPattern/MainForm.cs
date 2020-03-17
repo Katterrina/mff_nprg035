@@ -24,7 +24,7 @@ namespace EasyPattern
         public MainForm()
         {
             InitializeComponent();
-            measures.Visible = false;
+            measuresPanel.Visible = false;
             patternChoicePanel.Visible = false;
             viewerPanel.Visible = false;
             loadMeasureChoice();
@@ -79,7 +79,7 @@ namespace EasyPattern
             if (updateMeasures.Checked)
             {
                 welcome.Visible = false;
-                measures.Visible = true;
+                measuresPanel.Visible = true;
                 nameAndNoteMeasures.Visible = false;
 
 
@@ -187,29 +187,19 @@ namespace EasyPattern
             }
         }
 
-        private void toWelcomeClick()
+        private void toWelcome1_Click(object sender, EventArgs e)
         {
-            measures.Visible = false;
+            measuresPanel.Visible = false;
             welcome.Visible = true;
             patternChoicePanel.Visible = false;
             viewerPanel.Visible = false;
             loadMeasureChoice();
         }
 
-        private void toWelcome1_Click(object sender, EventArgs e)
-        {
-            toWelcomeClick();
-        }
-
-        private void toWelcome2_Click(object sender, EventArgs e)
-        {
-            toWelcomeClick();
-        }
-
 
         private void next2_Click(object sender, EventArgs e)
         {
-            measures.Visible = false;
+            measuresPanel.Visible = false;
             patternChoicePanel.Visible = true;
 
             PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
@@ -218,19 +208,21 @@ namespace EasyPattern
                                                             (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
                                                             (int)len_breast.Value);
         }
+        private void backToPatternChoice_Click(object sender, EventArgs e)
+        {
+            patternChoicePanel.Visible = true;
+            viewerPanel.Visible = false;
+        }
 
         private void doPattern_Click(object sender, EventArgs e)
         {
-
             patternChoicePanel.Visible = false;
+            measuresPanel.Visible = false;
             viewerPanel.Visible = true;
 
-            PdfPage page = PatternGeometry.CreatePdfPage();
-            PatternGeometry.Skirt(page);
-
+            folderBrowserDialog.ShowDialog();
+            PatternGeometry.PdfPattern((PatternGeometry.Pattern)patternToDo.SelectedIndex, folderBrowserDialog.SelectedPath);
         }
-
-
     }
 
 }
