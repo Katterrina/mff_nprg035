@@ -71,8 +71,10 @@ namespace EasyPattern
 
         public static MeasuresData measures;
 
-        public static void PdfPattern(Pattern pattern, string path)
+        public static string PdfPattern(Pattern pattern, string path)
         {
+            string pathPdf = path + "pokus.pdf";
+
             PdfDocument pdfDoc = CreatePdfPage(pattern);
 
             switch (pattern)
@@ -91,6 +93,10 @@ namespace EasyPattern
                 default:
                     break;
             }
+
+            SaveClose(pdfDoc, pathPdf);
+
+            return pathPdf;
         }
         static PdfDocument CreatePdfPage(Pattern p)
         {
@@ -109,6 +115,12 @@ namespace EasyPattern
             XGraphics gfx = XGraphics.FromPdfPage(page);
             XBrush brush = new XSolidBrush();
             gfx.DrawEllipse(brush, 0, 0, 100, 100);
+        }
+
+        static void SaveClose(PdfDocument pdfDoc,string path)
+        {
+            pdfDoc.Save(path);
+            pdfDoc.Close();
         }
     }
 }

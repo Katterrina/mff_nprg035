@@ -221,7 +221,11 @@ namespace EasyPattern
             viewerPanel.Visible = true;
 
             folderBrowserDialog.ShowDialog();
-            PatternGeometry.PdfPattern((PatternGeometry.Pattern)patternToDo.SelectedIndex, folderBrowserDialog.SelectedPath);
+            string path = folderBrowserDialog.SelectedPath;
+            string viewPath = PatternGeometry.PdfPattern((PatternGeometry.Pattern)patternToDo.SelectedIndex, path);
+
+
+            pdfViewer.Document = Patagames.Pdf.Net.PdfDocument.Load(viewPath);
         }
     }
 

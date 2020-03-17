@@ -77,11 +77,11 @@
             this.patternToDo = new System.Windows.Forms.ComboBox();
             this.viewerPanel = new System.Windows.Forms.Panel();
             this.end = new System.Windows.Forms.Button();
-            this.pdfToolStripZoomEx = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx();
-            this.pdfViewer1 = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
+            this.pdfViewer = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
             this.toWelcome3 = new System.Windows.Forms.Button();
             this.backToPatternChoice = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.pdfToolStripZoomEx = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx();
             this.welcome.SuspendLayout();
             this.measuresPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.len_knee)).BeginInit();
@@ -614,13 +614,13 @@
             // viewerPanel
             // 
             this.viewerPanel.Controls.Add(this.end);
-            this.viewerPanel.Controls.Add(this.pdfToolStripZoomEx);
-            this.viewerPanel.Controls.Add(this.pdfViewer1);
             this.viewerPanel.Controls.Add(this.toWelcome3);
             this.viewerPanel.Controls.Add(this.backToPatternChoice);
-            this.viewerPanel.Location = new System.Drawing.Point(12, 67);
+            this.viewerPanel.Controls.Add(this.pdfToolStripZoomEx);
+            this.viewerPanel.Controls.Add(this.pdfViewer);
+            this.viewerPanel.Location = new System.Drawing.Point(9, 67);
             this.viewerPanel.Name = "viewerPanel";
-            this.viewerPanel.Size = new System.Drawing.Size(966, 541);
+            this.viewerPanel.Size = new System.Drawing.Size(969, 541);
             this.viewerPanel.TabIndex = 9;
             // 
             // end
@@ -632,63 +632,38 @@
             this.end.Text = "Konec";
             this.end.UseVisualStyleBackColor = true;
             // 
-            // pdfToolStripZoomEx
+            // pdfViewer
             // 
-            this.pdfToolStripZoomEx.Location = new System.Drawing.Point(0, 0);
-            this.pdfToolStripZoomEx.Name = "pdfToolStripZoomEx";
-            this.pdfToolStripZoomEx.PdfViewer = null;
-            this.pdfToolStripZoomEx.Size = new System.Drawing.Size(966, 25);
-            this.pdfToolStripZoomEx.TabIndex = 3;
-            this.pdfToolStripZoomEx.Text = "pdfToolStripZoomEx1";
-            this.pdfToolStripZoomEx.ZoomLevel = new float[] {
-        8.33F,
-        12.5F,
-        25F,
-        33.33F,
-        50F,
-        66.67F,
-        75F,
-        100F,
-        125F,
-        150F,
-        200F,
-        300F,
-        400F,
-        600F,
-        800F};
-            // 
-            // pdfViewer1
-            // 
-            this.pdfViewer1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pdfViewer1.CurrentIndex = -1;
-            this.pdfViewer1.CurrentPageHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
-            this.pdfViewer1.Document = null;
-            this.pdfViewer1.FormHighlightColor = System.Drawing.Color.Transparent;
-            this.pdfViewer1.FormsBlendMode = Patagames.Pdf.Enums.BlendTypes.FXDIB_BLEND_MULTIPLY;
-            this.pdfViewer1.LoadingIconText = "Loading...";
-            this.pdfViewer1.Location = new System.Drawing.Point(136, 28);
-            this.pdfViewer1.MouseMode = Patagames.Pdf.Net.Controls.WinForms.MouseModes.Default;
-            this.pdfViewer1.Name = "pdfViewer1";
-            this.pdfViewer1.OptimizedLoadThreshold = 1000;
-            this.pdfViewer1.Padding = new System.Windows.Forms.Padding(10);
-            this.pdfViewer1.PageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.pdfViewer1.PageAutoDispose = true;
-            this.pdfViewer1.PageBackColor = System.Drawing.Color.White;
-            this.pdfViewer1.PageBorderColor = System.Drawing.Color.Black;
-            this.pdfViewer1.PageMargin = new System.Windows.Forms.Padding(10);
-            this.pdfViewer1.PageSeparatorColor = System.Drawing.Color.Gray;
-            this.pdfViewer1.RenderFlags = ((Patagames.Pdf.Enums.RenderFlags)((Patagames.Pdf.Enums.RenderFlags.FPDF_LCD_TEXT | Patagames.Pdf.Enums.RenderFlags.FPDF_NO_CATCH)));
-            this.pdfViewer1.ShowCurrentPageHighlight = true;
-            this.pdfViewer1.ShowLoadingIcon = true;
-            this.pdfViewer1.ShowPageSeparator = true;
-            this.pdfViewer1.Size = new System.Drawing.Size(830, 502);
-            this.pdfViewer1.SizeMode = Patagames.Pdf.Net.Controls.WinForms.SizeModes.FitToWidth;
-            this.pdfViewer1.TabIndex = 2;
-            this.pdfViewer1.TextSelectColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
-            this.pdfViewer1.TilesCount = 2;
-            this.pdfViewer1.UseProgressiveRender = true;
-            this.pdfViewer1.ViewMode = Patagames.Pdf.Net.Controls.WinForms.ViewModes.Vertical;
-            this.pdfViewer1.Zoom = 1F;
+            this.pdfViewer.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pdfViewer.CurrentIndex = -1;
+            this.pdfViewer.CurrentPageHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
+            this.pdfViewer.Document = null;
+            this.pdfViewer.FormHighlightColor = System.Drawing.Color.Transparent;
+            this.pdfViewer.FormsBlendMode = Patagames.Pdf.Enums.BlendTypes.FXDIB_BLEND_MULTIPLY;
+            this.pdfViewer.LoadingIconText = "Loading...";
+            this.pdfViewer.Location = new System.Drawing.Point(136, 3);
+            this.pdfViewer.MouseMode = Patagames.Pdf.Net.Controls.WinForms.MouseModes.Default;
+            this.pdfViewer.Name = "pdfViewer";
+            this.pdfViewer.OptimizedLoadThreshold = 1000;
+            this.pdfViewer.Padding = new System.Windows.Forms.Padding(10);
+            this.pdfViewer.PageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pdfViewer.PageAutoDispose = true;
+            this.pdfViewer.PageBackColor = System.Drawing.Color.White;
+            this.pdfViewer.PageBorderColor = System.Drawing.Color.Black;
+            this.pdfViewer.PageMargin = new System.Windows.Forms.Padding(10);
+            this.pdfViewer.PageSeparatorColor = System.Drawing.Color.Gray;
+            this.pdfViewer.RenderFlags = ((Patagames.Pdf.Enums.RenderFlags)((Patagames.Pdf.Enums.RenderFlags.FPDF_LCD_TEXT | Patagames.Pdf.Enums.RenderFlags.FPDF_NO_CATCH)));
+            this.pdfViewer.ShowCurrentPageHighlight = true;
+            this.pdfViewer.ShowLoadingIcon = true;
+            this.pdfViewer.ShowPageSeparator = true;
+            this.pdfViewer.Size = new System.Drawing.Size(830, 535);
+            this.pdfViewer.SizeMode = Patagames.Pdf.Net.Controls.WinForms.SizeModes.FitToSize;
+            this.pdfViewer.TabIndex = 2;
+            this.pdfViewer.TextSelectColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
+            this.pdfViewer.TilesCount = 2;
+            this.pdfViewer.UseProgressiveRender = true;
+            this.pdfViewer.ViewMode = Patagames.Pdf.Net.Controls.WinForms.ViewModes.Vertical;
+            this.pdfViewer.Zoom = 1F;
             // 
             // toWelcome3
             // 
@@ -710,13 +685,40 @@
             this.backToPatternChoice.UseVisualStyleBackColor = true;
             this.backToPatternChoice.Click += new System.EventHandler(this.backToPatternChoice_Click);
             // 
+            // pdfToolStripZoomEx
+            // 
+            this.pdfToolStripZoomEx.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pdfToolStripZoomEx.Location = new System.Drawing.Point(0, 0);
+            this.pdfToolStripZoomEx.Name = "pdfToolStripZoomEx";
+            this.pdfToolStripZoomEx.PdfViewer = this.pdfViewer;
+            this.pdfToolStripZoomEx.ShowItemToolTips = false;
+            this.pdfToolStripZoomEx.Size = new System.Drawing.Size(53, 541);
+            this.pdfToolStripZoomEx.TabIndex = 5;
+            this.pdfToolStripZoomEx.Text = "pdfToolStripZoomEx";
+            this.pdfToolStripZoomEx.ZoomLevel = new float[] {
+        8.33F,
+        12.5F,
+        25F,
+        33.33F,
+        50F,
+        66.67F,
+        75F,
+        100F,
+        125F,
+        150F,
+        200F,
+        300F,
+        400F,
+        600F,
+        800F};
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 620);
-            this.Controls.Add(this.measuresPanel);
             this.Controls.Add(this.viewerPanel);
+            this.Controls.Add(this.measuresPanel);
             this.Controls.Add(this.patternChoicePanel);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.header);
@@ -803,9 +805,9 @@
         private System.Windows.Forms.Button toWelcome3;
         private System.Windows.Forms.Button backToPatternChoice;
         private System.Windows.Forms.Button end;
-        private Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx pdfToolStripZoomEx;
-        private Patagames.Pdf.Net.Controls.WinForms.PdfViewer pdfViewer1;
+        private Patagames.Pdf.Net.Controls.WinForms.PdfViewer pdfViewer;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx pdfToolStripZoomEx;
     }
 }
 
