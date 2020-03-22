@@ -1,14 +1,15 @@
 ﻿using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using System;
 using System.ComponentModel;
+using System.IO;
 
 namespace EasyPattern
 {
     //https://www.slideshare.net/franckblau1/metric-pattern-cutting-womenswear-winifred-aldrich
     public struct MeasuresData
     {
-        public static double mm = 2.835;
         public int height { get; }
         public int circ_bust { get; }
         public int circ_waist { get; }
@@ -39,27 +40,27 @@ namespace EasyPattern
                      int len_breast,
                      int len_hips)
         {
-            this.height = (int)(height * mm);
-            this.circ_bust = (int)(circ_bust * mm);
-            this.circ_waist = (int)(circ_waist * mm);
-            this.circ_hips = (int)(circ_hips * mm);
-            this.len_back = (int)(len_back * mm);
-            this.wid_back = (int)(wid_back * mm);
-            this.len_knee = (int)(len_knee * mm);
-            this.len_sleeve = (int)(len_sleeve * mm);
-            this.len_shoulder = (int)(len_shoulder * mm);
-            this.circ_neck = (int)(circ_neck * mm);
-            this.len_hips = (int)(len_hips * mm);
-            if (circ_sleeve == 0) { this.circ_sleeve = 22; } else { this.circ_sleeve = (int)(circ_sleeve * mm); }
-            if (len_front == 0) { this.len_front = 0; } else { this.len_front = (int)(len_front * mm); } //TODO len_front
-            if (len_breast == 0) { this.len_breast = 0;  } else { this.len_breast = (int)(len_breast * mm); } //TODO len_breast
+            this.height = height;
+            this.circ_bust = circ_bust;
+            this.circ_waist = circ_waist;
+            this.circ_hips = circ_hips;
+            this.len_back = len_back;
+            this.wid_back = wid_back;
+            this.len_knee = len_knee;
+            this.len_sleeve = len_sleeve;
+            this.len_shoulder = len_shoulder;
+            this.circ_neck = circ_neck;
+            this.len_hips = len_hips;
+            if (circ_sleeve == 0) { this.circ_sleeve = 22; } else { this.circ_sleeve = circ_sleeve; }
+            if (len_front == 0) { this.len_front = 0; } else { this.len_front = len_front; } //TODO len_front
+            if (len_breast == 0) { this.len_breast = 0;  } else { this.len_breast = len_breast; } //TODO len_breast
         }
     }
 
     class PatternGeometry
     {
         public enum Pattern {[Description("rovná sukně")] straightSkirt, 
-                             [Description("rozšířená sukně")] skirt,
+                             [Description("rozšířená sukně")] wideSkirt,
                              [Description("šaty")] dress,  
                              [Description("košile")] shirt,
                              [Description("blůza")] blouse, 
@@ -77,7 +78,8 @@ namespace EasyPattern
                 case Pattern.straightSkirt:
                     straightSkirt();
                     break;
-                case Pattern.skirt:
+                case Pattern.wideSkirt:
+                    wideSkirt();
                     break;
                 case Pattern.dress:
                     break;
@@ -112,7 +114,7 @@ namespace EasyPattern
             pdfDoc.Close();
         }
 
-        static PdfPage AddPatternPage(int patternHeight, int patternWidth)
+        static PdfPage AddPatternPage(double patternHeight, double patternWidth)
         {
             PdfPage p = pdfDoc.AddPage();
             p.Size = PageSize.A0;
@@ -121,20 +123,17 @@ namespace EasyPattern
             { 
                 p.Orientation = PageOrientation.Landscape; 
 
-                if (patternHeight < p.Width - 100 && patternWidth < p.Height - 100)
+                if (patternHeight < 820 && patternWidth < 550)
                 {
                     p.Size = PageSize.A1;
-                }
-                else
-                {
-                    p.Size = PageSize.A0;
+                    
                 }
             }
             else 
             { 
                 p.Orientation = PageOrientation.Portrait;
 
-                if (patternHeight < p.Height - 100 && patternWidth < p.Width - 100)
+                if (patternHeight < 550 && patternWidth < 8240)
                 {
                     p.Size = PageSize.A1;
                 }
@@ -143,20 +142,123 @@ namespace EasyPattern
             return p;
         }
 
-        static void straightSkirt()
+        static void wideSkirt()
         {
-            PdfPage p = AddPatternPage(measures.len_knee, measures.circ_hips / 2);
-            XGraphics gfx = XGraphics.FromPdfPage(p);
+            double hipsAddition = 15;
+            double downAddition = 40;
 
-            XPoint start = new XPoint(150, 200);
+            PdfPage p = AddPatternPage(measures.len_knee, measures.circ_hips / 2 + hipsAddition + downAddition);
+            XGraphics gfx = XGraphics.FromPdfPage(p, XGraphicsUnit.Millimeter);
+
+            XPoint start = new XPoint(30, 30);
             XPoint hipsBack = new XPoint(start.X, start.Y + measures.len_hips);
             XPoint downBack = new XPoint(start.X, start.Y + measures.len_knee);
 
-            int widthBack = measures.circ_hips / 4 ;
-            int widthFront = measures.circ_hips / 4 + (int)(MeasuresData.mm * 15); // todo závislost přídavku na šířce
-            int widthAll = widthBack + widthFront;
+            double widthOnePart = measures.circ_hips / 4 + hipsAddition / 2;
+            double widthAll = 2 * widthOnePart + downAddition;
 
-            XPoint upCenter = new XPoint(start.X + widthBack, start.Y - MeasuresData.mm * 10);
+            double plusUpHips = 10;
+
+            XPoint upCenter1 = new XPoint(start.X + widthOnePart, start.Y - plusUpHips);
+            XPoint hipsCenter1 = new XPoint(hipsBack.X + widthOnePart, hipsBack.Y);
+
+            XPoint upCenter2 = new XPoint(start.X + widthOnePart + downAddition, start.Y - plusUpHips);
+            XPoint hipsCenter2 = new XPoint(hipsBack.X + widthOnePart + downAddition, hipsBack.Y);
+
+            XPoint upFront = new XPoint(start.X + widthAll, start.Y);
+            XPoint hipsFront = new XPoint(start.X + widthAll, hipsBack.Y);
+            XPoint downFront = new XPoint(start.X + widthAll, start.Y + measures.len_knee);
+
+            XPen pen = XPens.Black;
+            gfx.DrawLine(pen, start, downBack);
+            gfx.DrawLine(pen, start, upFront);
+            gfx.DrawLine(pen, downBack, downFront);
+            gfx.DrawLine(pen, upFront, downFront);
+            gfx.DrawLine(pen, upCenter1, hipsCenter1);
+            gfx.DrawLine(pen, upCenter2, hipsCenter2);
+            gfx.DrawLine(pen, hipsBack, hipsFront);
+
+            // ------------------- TUCKS ------------------------
+
+            double allTucksWidth = (measures.circ_hips + hipsAddition - measures.circ_waist) / 2;
+            double frontTuckWidth = 3 * allTucksWidth / 14;
+            double backTuckWidth = 4 * allTucksWidth / 14;
+            double hipsTuckWidth = allTucksWidth / 2;
+
+            XPoint upFrontTuck = new XPoint(upFront.X - widthOnePart / 3, upFront.Y);
+            XPoint downFrontTuck = new XPoint(upFrontTuck.X, upFrontTuck.Y + measures.len_hips -30);
+
+            XPoint upBackTuck = new XPoint(start.X + widthOnePart / 3, start.Y);
+            XPoint downBackTuck = new XPoint(upBackTuck.X, upBackTuck.Y + measures.len_hips - 30);
+
+            gfx.DrawLine(pen, upFrontTuck, downFrontTuck);
+            gfx.DrawLine(pen, upBackTuck, downBackTuck);
+
+            XPoint hipsTuckBack = new XPoint(upCenter1.X - (hipsTuckWidth / 2), upCenter1.Y);
+            XPoint hipsTuckFront = new XPoint(upCenter2.X + (hipsTuckWidth / 2), upCenter2.Y);
+
+            gfx.DrawLine(pen, start, hipsTuckBack);
+            gfx.DrawLine(pen, upFront, hipsTuckFront);
+
+            XPoint hipsBezierDown1 = new XPoint(hipsCenter1.X, hipsCenter1.Y - (measures.len_hips / 2));
+            XPoint hipsBezierDown2 = new XPoint(hipsCenter2.X, hipsCenter2.Y - (measures.len_hips / 2));
+
+            gfx.DrawBezier(pen,hipsTuckBack, hipsTuckBack, hipsBezierDown1, hipsCenter1);
+            gfx.DrawBezier(pen, hipsTuckFront, hipsTuckFront, hipsBezierDown2, hipsCenter2);
+
+            // front tuck
+
+            double hFT1 = (upFront.X - upFrontTuck.X + (frontTuckWidth / 2)) * plusUpHips / widthOnePart;
+            XPoint frontTuck1 = new XPoint(upFrontTuck.X - (frontTuckWidth / 2), upFrontTuck.Y - hFT1);
+            gfx.DrawLine(pen, frontTuck1, downFrontTuck);
+
+            double hFT2 = (upFront.X - upFrontTuck.X - (frontTuckWidth / 2)) * plusUpHips / widthOnePart;
+            XPoint frontTuck2 = new XPoint(upFrontTuck.X + (frontTuckWidth / 2), upFrontTuck.Y - hFT2);
+            gfx.DrawLine(pen, frontTuck2, downFrontTuck);
+
+            XPoint FTDownHem = new XPoint(downFrontTuck.X,downBack.Y);
+            gfx.DrawLine(pen, FTDownHem, downFrontTuck);
+
+            // back tuck
+
+
+            double hBT1 = (upBackTuck.X + (backTuckWidth / 2) - start.X) * plusUpHips / widthOnePart;
+            XPoint backTuck1 = new XPoint(upBackTuck.X + (backTuckWidth / 2), upBackTuck.Y - hBT1);
+            gfx.DrawLine(pen, backTuck1, downBackTuck);
+
+            double hBT2 = (upBackTuck.X - (backTuckWidth / 2) - start.X) * plusUpHips / widthOnePart;
+            XPoint backTuck2 = new XPoint(upBackTuck.X - (backTuckWidth / 2), upBackTuck.Y - hBT2);
+            gfx.DrawLine(pen, backTuck2, downBackTuck);
+
+            XPoint BTDownHem = new XPoint(downBackTuck.X, downBack.Y);
+            gfx.DrawLine(pen, BTDownHem, downBackTuck);
+
+            // down edge
+
+
+            XPoint downCenter = new XPoint(start.X + (widthAll/2),downBack.Y);
+            gfx.DrawLine(pen, hipsCenter1, downCenter);
+            gfx.DrawLine(pen, hipsCenter2, downCenter);
+        }
+
+        static void straightSkirt()
+        {
+            double hipsAddition = 20;
+
+            PdfPage p = AddPatternPage(measures.len_knee, measures.circ_hips / 2 + hipsAddition);
+            XGraphics gfx = XGraphics.FromPdfPage(p, XGraphicsUnit.Millimeter);
+
+            XPoint start = new XPoint(30, 30);
+            XPoint hipsBack = new XPoint(start.X, start.Y + measures.len_hips);
+            XPoint downBack = new XPoint(start.X, start.Y + measures.len_knee);
+
+            double widthBack = measures.circ_hips / 4 ;
+            double widthFront = measures.circ_hips / 4 + hipsAddition;
+            double widthAll = widthBack + widthFront;
+
+            double plusUpHips = 10;
+
+            XPoint upCenter = new XPoint(start.X + widthBack, start.Y - plusUpHips);
             XPoint hipsCenter = new XPoint(hipsBack.X + widthBack, hipsBack.Y);
             XPoint downCenter = new XPoint(downBack.X + widthBack, downBack.Y);
 
@@ -172,18 +274,21 @@ namespace EasyPattern
             gfx.DrawLine(pen, upCenter, downCenter);
             gfx.DrawLine(pen, hipsBack, hipsFront);
 
-            // todo záševky různá hloubka
 
-            XPoint upFrontTuck = new XPoint(upFront.X - ((measures.circ_waist / 10) + MeasuresData.mm * 70), upFront.Y);
-            XPoint downFrontTuck = new XPoint(upFrontTuck.X, upFrontTuck.Y + MeasuresData.mm * 90);
+            double frontTuckDepth = 9 * measures.len_hips / 20;
+            double firstBackTuckDepth = 14 * measures.len_hips / 20;
+            double secondBackTuckDepth = 12 * measures.len_hips / 20;
 
-            int backTuckGap = widthBack / 3;
+            XPoint upFrontTuck = new XPoint(upFront.X - ((measures.circ_waist / 10) + 70), upFront.Y);
+            XPoint downFrontTuck = new XPoint(upFrontTuck.X, upFrontTuck.Y + frontTuckDepth);
+
+            double backTuckGap = widthBack / 3;
 
             XPoint upFirstBackTuck = new XPoint(start.X + backTuckGap, start.Y);
-            XPoint downFirstBackTuck = new XPoint(upFirstBackTuck.X, upFirstBackTuck.Y + MeasuresData.mm * 140);
+            XPoint downFirstBackTuck = new XPoint(upFirstBackTuck.X, upFirstBackTuck.Y + firstBackTuckDepth);
 
             XPoint upSecondBackTuck = new XPoint(start.X + backTuckGap * 2, start.Y);
-            XPoint downSecondBackTuck = new XPoint(upSecondBackTuck.X, upSecondBackTuck.Y + MeasuresData.mm * 120);
+            XPoint downSecondBackTuck = new XPoint(upSecondBackTuck.X, upSecondBackTuck.Y + secondBackTuckDepth);
 
             gfx.DrawLine(pen, upFrontTuck, downFrontTuck);
             gfx.DrawLine(pen, upFirstBackTuck, downFirstBackTuck);
@@ -191,12 +296,14 @@ namespace EasyPattern
 
 
             // ------------------ TUCKS ---------------------------------------
-            double allTucksWidth = (measures.circ_hips + (MeasuresData.mm * 10) - measures.circ_waist) / 2;
+            double allTucksWidth = (measures.circ_hips + hipsAddition - measures.circ_waist) / 2;
             double frontTuckWidth = allTucksWidth / 6;
-            double backTuckWidth = 2 * allTucksWidth / 6;
+            double backTuckWidth = allTucksWidth / 6;
             double hipsTuckWidth = allTucksWidth / 2;
             double hipsTuckBackWidth = 3 * hipsTuckWidth / 7;
             double hipsTuckFrontWidth = 4 * hipsTuckWidth / 7;
+
+            double downTuck = 20;
 
             XPoint hipsTuckBack = new XPoint(upCenter.X - hipsTuckBackWidth, upCenter.Y);
             XPoint hipsTuckFront = new XPoint(upCenter.X + hipsTuckFrontWidth, upCenter.Y);
@@ -206,39 +313,53 @@ namespace EasyPattern
 
             double widthBackMinusHipsTuck = widthBack - hipsTuckBackWidth;
             // first back tuck
-            double hFBT1 = (backTuckGap - (backTuckWidth/2)) * (MeasuresData.mm * 10) / widthBackMinusHipsTuck;
+            double hFBT1 = (backTuckGap - (backTuckWidth/2)) * plusUpHips / widthBackMinusHipsTuck;
             XPoint firstBackTuck1 = new XPoint(upFirstBackTuck.X - (backTuckWidth / 2), upFirstBackTuck.Y - hFBT1);
             gfx.DrawLine(pen, firstBackTuck1, downFirstBackTuck);
 
-            double hFBT2 = (backTuckGap + (backTuckWidth / 2)) * (MeasuresData.mm * 10) / widthBackMinusHipsTuck;
+            double hFBT2 = (backTuckGap + (backTuckWidth / 2)) * plusUpHips / widthBackMinusHipsTuck;
             XPoint firstBackTuck2 = new XPoint(upFirstBackTuck.X + (backTuckWidth / 2), upFirstBackTuck.Y - hFBT2);
             gfx.DrawLine(pen, firstBackTuck2, downFirstBackTuck);
 
             // second back tuck
-            double hSBT1 = (backTuckGap * 2 - (backTuckWidth / 2)) * (MeasuresData.mm * 10) / widthBackMinusHipsTuck;
+            double hSBT1 = (backTuckGap * 2 - (backTuckWidth / 2)) * plusUpHips / widthBackMinusHipsTuck;
             XPoint secondBackTuck1 = new XPoint(upSecondBackTuck.X - (backTuckWidth / 2), upSecondBackTuck.Y - hSBT1);
             gfx.DrawLine(pen, secondBackTuck1, downSecondBackTuck);
 
-            double hSBT2 = (backTuckGap * 2 + (backTuckWidth / 2)) * (MeasuresData.mm * 10) / widthBackMinusHipsTuck;
+            double hSBT2 = (backTuckGap * 2 + (backTuckWidth / 2)) * plusUpHips / widthBackMinusHipsTuck;
             XPoint secondBackTuck2 = new XPoint(upSecondBackTuck.X + (backTuckWidth / 2), upSecondBackTuck.Y - hSBT2);
             gfx.DrawLine(pen, secondBackTuck2, downSecondBackTuck);
 
             double frontWidthWithoutTuck = widthFront - hipsTuckFrontWidth;
             // front tuck
-            double hFT1 = (upFront.X - upFrontTuck.X + (frontTuckWidth/2)) * (MeasuresData.mm * 10) / frontWidthWithoutTuck;
+            double hFT1 = (upFront.X - upFrontTuck.X + (frontTuckWidth/2)) * plusUpHips / frontWidthWithoutTuck;
             XPoint frontTuck1 = new XPoint(upFrontTuck.X - (frontTuckWidth / 2), upFrontTuck.Y - hFT1);
             gfx.DrawLine(pen, frontTuck1, downFrontTuck);
 
-            double hFT2 = (upFront.X - upFrontTuck.X - (frontTuckWidth / 2)) * (MeasuresData.mm * 10) / frontWidthWithoutTuck;
+            double hFT2 = (upFront.X - upFrontTuck.X - (frontTuckWidth / 2)) * plusUpHips / frontWidthWithoutTuck;
             XPoint frontTuck2 = new XPoint(upFrontTuck.X + (frontTuckWidth / 2), upFrontTuck.Y - hFT2);
             gfx.DrawLine(pen, frontTuck2, downFrontTuck);
 
             // hips tuck
             XPoint hipsTuckDown = new XPoint(hipsCenter.X, hipsCenter.Y - hipsTuckFrontWidth);
-            XPoint hipsBezier = new XPoint(hipsCenter.X - (MeasuresData.mm * 10), hipsCenter.Y - (2*measures.len_hips / 3));
-            gfx.DrawBezier(pen, hipsTuckBack, hipsBezier, hipsBezier, hipsTuckDown);
 
-            //string test = "záševek "+ hFBT1.ToString() + "backTuckGap " + backTuckGap.ToString() + " widthB " + widthBack.ToString() + " odečet " + (MeasuresData.mm * 15).ToString();
+            XPoint hipsBackBezierUp = new XPoint(hipsCenter.X - (hipsTuckBackWidth / 2), hipsCenter.Y - (3 * measures.len_hips / 4));
+            XPoint hipsBackBezierDown = new XPoint(hipsCenter.X - (hipsTuckBackWidth / 10), hipsCenter.Y - (measures.len_hips / 3));
+            gfx.DrawBezier(pen, hipsTuckBack, hipsBackBezierUp, hipsBackBezierDown, hipsTuckDown);
+
+            XPoint hipsFrontBezierUp = new XPoint(hipsCenter.X + (hipsTuckFrontWidth / 2), hipsCenter.Y - (3 * measures.len_hips / 4));
+            XPoint hipsFrontBezierDown = new XPoint(hipsCenter.X + (hipsTuckFrontWidth / 10), hipsCenter.Y - (measures.len_hips / 3));
+            gfx.DrawBezier(pen, hipsTuckFront, hipsFrontBezierUp, hipsFrontBezierDown, hipsTuckDown);
+
+
+            // down tuck
+            XPoint downTuckBack = new XPoint(downCenter.X - (downTuck / 2), downCenter.Y);
+            XPoint downTuckFront = new XPoint(downCenter.X + (downTuck / 2), downCenter.Y);
+            gfx.DrawLine(pen,hipsCenter, downTuckBack);
+            gfx.DrawLine(pen, hipsCenter, downTuckFront);
+
+
+            //string test = p.Size.ToString();
 
             //XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
             ////// Draw the text
