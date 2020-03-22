@@ -77,11 +77,14 @@
             this.patternToDo = new System.Windows.Forms.ComboBox();
             this.viewerPanel = new System.Windows.Forms.Panel();
             this.end = new System.Windows.Forms.Button();
-            this.pdfViewer = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
             this.toWelcome3 = new System.Windows.Forms.Button();
             this.backToPatternChoice = new System.Windows.Forms.Button();
-            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.pdfToolStripZoomEx = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx();
+            this.pdfViewer = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.pdfToolStripRotate1 = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripRotate();
+            this.label16 = new System.Windows.Forms.Label();
+            this.len_hips = new System.Windows.Forms.NumericUpDown();
             this.welcome.SuspendLayout();
             this.measuresPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.len_knee)).BeginInit();
@@ -100,6 +103,7 @@
             this.nameAndNoteMeasures.SuspendLayout();
             this.patternChoicePanel.SuspendLayout();
             this.viewerPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.len_hips)).BeginInit();
             this.SuspendLayout();
             // 
             // choiceMeasuresSet
@@ -177,6 +181,8 @@
             // 
             // measuresPanel
             // 
+            this.measuresPanel.Controls.Add(this.len_hips);
+            this.measuresPanel.Controls.Add(this.label16);
             this.measuresPanel.Controls.Add(this.len_knee);
             this.measuresPanel.Controls.Add(this.label13);
             this.measuresPanel.Controls.Add(this.circ_sleeve);
@@ -215,7 +221,7 @@
             // 
             // len_knee
             // 
-            this.len_knee.Location = new System.Drawing.Point(440, 420);
+            this.len_knee.Location = new System.Drawing.Point(440, 444);
             this.len_knee.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -228,7 +234,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(312, 427);
+            this.label13.Location = new System.Drawing.Point(312, 451);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(122, 13);
             this.label13.TabIndex = 31;
@@ -236,7 +242,7 @@
             // 
             // circ_sleeve
             // 
-            this.circ_sleeve.Location = new System.Drawing.Point(440, 394);
+            this.circ_sleeve.Location = new System.Drawing.Point(440, 418);
             this.circ_sleeve.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -248,7 +254,7 @@
             // 
             // circ_neck
             // 
-            this.circ_neck.Location = new System.Drawing.Point(440, 368);
+            this.circ_neck.Location = new System.Drawing.Point(440, 392);
             this.circ_neck.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -260,7 +266,7 @@
             // 
             // len_breast
             // 
-            this.len_breast.Location = new System.Drawing.Point(440, 342);
+            this.len_breast.Location = new System.Drawing.Point(440, 366);
             this.len_breast.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -272,7 +278,7 @@
             // 
             // len_front
             // 
-            this.len_front.Location = new System.Drawing.Point(440, 316);
+            this.len_front.Location = new System.Drawing.Point(440, 340);
             this.len_front.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -284,7 +290,7 @@
             // 
             // len_sleeve
             // 
-            this.len_sleeve.Location = new System.Drawing.Point(440, 290);
+            this.len_sleeve.Location = new System.Drawing.Point(440, 314);
             this.len_sleeve.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -296,7 +302,7 @@
             // 
             // len_shoulder
             // 
-            this.len_shoulder.Location = new System.Drawing.Point(440, 264);
+            this.len_shoulder.Location = new System.Drawing.Point(440, 288);
             this.len_shoulder.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -308,7 +314,7 @@
             // 
             // wid_back
             // 
-            this.wid_back.Location = new System.Drawing.Point(440, 238);
+            this.wid_back.Location = new System.Drawing.Point(440, 262);
             this.wid_back.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -320,7 +326,7 @@
             // 
             // len_back
             // 
-            this.len_back.Location = new System.Drawing.Point(440, 212);
+            this.len_back.Location = new System.Drawing.Point(440, 236);
             this.len_back.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -458,7 +464,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(337, 401);
+            this.label12.Location = new System.Drawing.Point(337, 425);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(97, 13);
             this.label12.TabIndex = 11;
@@ -467,7 +473,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(371, 375);
+            this.label11.Location = new System.Drawing.Point(371, 399);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 10;
@@ -476,7 +482,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(358, 349);
+            this.label10.Location = new System.Drawing.Point(358, 373);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(76, 13);
             this.label10.TabIndex = 9;
@@ -485,7 +491,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(365, 323);
+            this.label9.Location = new System.Drawing.Point(365, 347);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 8;
@@ -494,7 +500,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(363, 297);
+            this.label8.Location = new System.Drawing.Point(363, 321);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(71, 13);
             this.label8.TabIndex = 7;
@@ -503,7 +509,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(362, 271);
+            this.label7.Location = new System.Drawing.Point(362, 295);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 13);
             this.label7.TabIndex = 6;
@@ -512,7 +518,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(380, 245);
+            this.label6.Location = new System.Drawing.Point(380, 269);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 5;
@@ -521,7 +527,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(379, 219);
+            this.label5.Location = new System.Drawing.Point(379, 243);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(55, 13);
             this.label5.TabIndex = 4;
@@ -616,6 +622,7 @@
             this.viewerPanel.Controls.Add(this.end);
             this.viewerPanel.Controls.Add(this.toWelcome3);
             this.viewerPanel.Controls.Add(this.backToPatternChoice);
+            this.viewerPanel.Controls.Add(this.pdfToolStripRotate1);
             this.viewerPanel.Controls.Add(this.pdfToolStripZoomEx);
             this.viewerPanel.Controls.Add(this.pdfViewer);
             this.viewerPanel.Location = new System.Drawing.Point(9, 67);
@@ -631,39 +638,6 @@
             this.end.TabIndex = 4;
             this.end.Text = "Konec";
             this.end.UseVisualStyleBackColor = true;
-            // 
-            // pdfViewer
-            // 
-            this.pdfViewer.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pdfViewer.CurrentIndex = -1;
-            this.pdfViewer.CurrentPageHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
-            this.pdfViewer.Document = null;
-            this.pdfViewer.FormHighlightColor = System.Drawing.Color.Transparent;
-            this.pdfViewer.FormsBlendMode = Patagames.Pdf.Enums.BlendTypes.FXDIB_BLEND_MULTIPLY;
-            this.pdfViewer.LoadingIconText = "Loading...";
-            this.pdfViewer.Location = new System.Drawing.Point(136, 3);
-            this.pdfViewer.MouseMode = Patagames.Pdf.Net.Controls.WinForms.MouseModes.Default;
-            this.pdfViewer.Name = "pdfViewer";
-            this.pdfViewer.OptimizedLoadThreshold = 1000;
-            this.pdfViewer.Padding = new System.Windows.Forms.Padding(10);
-            this.pdfViewer.PageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.pdfViewer.PageAutoDispose = true;
-            this.pdfViewer.PageBackColor = System.Drawing.Color.White;
-            this.pdfViewer.PageBorderColor = System.Drawing.Color.Black;
-            this.pdfViewer.PageMargin = new System.Windows.Forms.Padding(10);
-            this.pdfViewer.PageSeparatorColor = System.Drawing.Color.Gray;
-            this.pdfViewer.RenderFlags = ((Patagames.Pdf.Enums.RenderFlags)((Patagames.Pdf.Enums.RenderFlags.FPDF_LCD_TEXT | Patagames.Pdf.Enums.RenderFlags.FPDF_NO_CATCH)));
-            this.pdfViewer.ShowCurrentPageHighlight = true;
-            this.pdfViewer.ShowLoadingIcon = true;
-            this.pdfViewer.ShowPageSeparator = true;
-            this.pdfViewer.Size = new System.Drawing.Size(830, 535);
-            this.pdfViewer.SizeMode = Patagames.Pdf.Net.Controls.WinForms.SizeModes.FitToSize;
-            this.pdfViewer.TabIndex = 2;
-            this.pdfViewer.TextSelectColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
-            this.pdfViewer.TilesCount = 2;
-            this.pdfViewer.UseProgressiveRender = true;
-            this.pdfViewer.ViewMode = Patagames.Pdf.Net.Controls.WinForms.ViewModes.Vertical;
-            this.pdfViewer.Zoom = 1F;
             // 
             // toWelcome3
             // 
@@ -712,16 +686,80 @@
         600F,
         800F};
             // 
+            // pdfViewer
+            // 
+            this.pdfViewer.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pdfViewer.CurrentIndex = -1;
+            this.pdfViewer.CurrentPageHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
+            this.pdfViewer.Document = null;
+            this.pdfViewer.FormHighlightColor = System.Drawing.Color.Transparent;
+            this.pdfViewer.FormsBlendMode = Patagames.Pdf.Enums.BlendTypes.FXDIB_BLEND_MULTIPLY;
+            this.pdfViewer.LoadingIconText = "Loading...";
+            this.pdfViewer.Location = new System.Drawing.Point(136, 3);
+            this.pdfViewer.MouseMode = Patagames.Pdf.Net.Controls.WinForms.MouseModes.Default;
+            this.pdfViewer.Name = "pdfViewer";
+            this.pdfViewer.OptimizedLoadThreshold = 1000;
+            this.pdfViewer.Padding = new System.Windows.Forms.Padding(10);
+            this.pdfViewer.PageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pdfViewer.PageAutoDispose = true;
+            this.pdfViewer.PageBackColor = System.Drawing.Color.White;
+            this.pdfViewer.PageBorderColor = System.Drawing.Color.Black;
+            this.pdfViewer.PageMargin = new System.Windows.Forms.Padding(10);
+            this.pdfViewer.PageSeparatorColor = System.Drawing.Color.Gray;
+            this.pdfViewer.RenderFlags = ((Patagames.Pdf.Enums.RenderFlags)((Patagames.Pdf.Enums.RenderFlags.FPDF_LCD_TEXT | Patagames.Pdf.Enums.RenderFlags.FPDF_NO_CATCH)));
+            this.pdfViewer.ShowCurrentPageHighlight = true;
+            this.pdfViewer.ShowLoadingIcon = true;
+            this.pdfViewer.ShowPageSeparator = true;
+            this.pdfViewer.Size = new System.Drawing.Size(830, 535);
+            this.pdfViewer.SizeMode = Patagames.Pdf.Net.Controls.WinForms.SizeModes.FitToSize;
+            this.pdfViewer.TabIndex = 2;
+            this.pdfViewer.TextSelectColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
+            this.pdfViewer.TilesCount = 2;
+            this.pdfViewer.UseProgressiveRender = true;
+            this.pdfViewer.ViewMode = Patagames.Pdf.Net.Controls.WinForms.ViewModes.Vertical;
+            this.pdfViewer.Zoom = 1F;
+            // 
+            // pdfToolStripRotate1
+            // 
+            this.pdfToolStripRotate1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pdfToolStripRotate1.Location = new System.Drawing.Point(53, 0);
+            this.pdfToolStripRotate1.Name = "pdfToolStripRotate1";
+            this.pdfToolStripRotate1.PdfViewer = this.pdfViewer;
+            this.pdfToolStripRotate1.Size = new System.Drawing.Size(60, 541);
+            this.pdfToolStripRotate1.TabIndex = 6;
+            this.pdfToolStripRotate1.Text = "pdfToolStripRotate1";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(362, 217);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(74, 13);
+            this.label16.TabIndex = 33;
+            this.label16.Text = "Hloubka boku";
+            // 
+            // len_hips
+            // 
+            this.len_hips.Location = new System.Drawing.Point(440, 210);
+            this.len_hips.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.len_hips.Name = "len_hips";
+            this.len_hips.Size = new System.Drawing.Size(100, 20);
+            this.len_hips.TabIndex = 34;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 620);
+            this.Controls.Add(this.header);
             this.Controls.Add(this.viewerPanel);
             this.Controls.Add(this.measuresPanel);
             this.Controls.Add(this.patternChoicePanel);
             this.Controls.Add(this.welcome);
-            this.Controls.Add(this.header);
             this.Name = "MainForm";
             this.Text = "Střihovátko";
             this.welcome.ResumeLayout(false);
@@ -747,6 +785,7 @@
             this.patternChoicePanel.PerformLayout();
             this.viewerPanel.ResumeLayout(false);
             this.viewerPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.len_hips)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -808,6 +847,9 @@
         private Patagames.Pdf.Net.Controls.WinForms.PdfViewer pdfViewer;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx pdfToolStripZoomEx;
+        private Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripRotate pdfToolStripRotate1;
+        private System.Windows.Forms.NumericUpDown len_hips;
+        private System.Windows.Forms.Label label16;
     }
 }
 

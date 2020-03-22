@@ -137,6 +137,7 @@ namespace EasyPattern
                                 circ_sleeve.Value = Convert.ToDecimal(reader["circ_sleeve"]);
                                 len_front.Value = Convert.ToDecimal(reader["len_front"]);
                                 len_breast.Value = Convert.ToDecimal(reader["len_breast"]);
+                                len_hips.Value = Convert.ToDecimal(reader["len_hips"]);
                             }
                         }
                     }
@@ -171,10 +172,10 @@ namespace EasyPattern
         {
             string sql = $"INSERT INTO MeasuresSets " +
                 $"(name, note, height, circ_bust, circ_waist, circ_hips, len_back, wid_back, len_knee, " +
-                $"len_shoulder, len_sleeve, circ_neck, circ_sleeve, len_front, len_breast)" +
+                $"len_shoulder, len_sleeve, circ_neck, circ_sleeve, len_front, len_breast, len_hips)" +
                 $" VALUES " +
                 $"('{name}','{note}',{m.height},{m.circ_bust},{m.circ_waist},{m.circ_hips},{m.len_back},{m.wid_back},{m.len_knee}," +
-                $"{m.len_shoulder},{m.len_sleeve},{m.circ_neck},{m.circ_sleeve},{m.len_front},{m.len_breast})";
+                $"{m.len_shoulder},{m.len_sleeve},{m.circ_neck},{m.circ_sleeve},{m.len_front},{m.len_breast},{m.len_hips})";
 
             using (SqlConnection con = new SqlConnection(conString))
             {
@@ -206,7 +207,8 @@ namespace EasyPattern
                                                             (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
                                                             (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value,
                                                             (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
-                                                            (int)len_breast.Value);
+                                                            (int)len_breast.Value,(int)len_hips.Value);
+            // TODO dořešit použití dat přímo z databáze
         }
         private void backToPatternChoice_Click(object sender, EventArgs e)
         {
