@@ -84,6 +84,7 @@ namespace EasyPattern
                 case Pattern.dress:
                     break;
                 case Pattern.shirt:
+                    Shirt();
                     break;
                 case Pattern.blouse:
                     break;
@@ -366,6 +367,82 @@ namespace EasyPattern
             //gfx.DrawString(test, font, XBrushes.Black,
             //  new XRect(0, 0, p.Width, p.Height),
             //  XStringFormats.Center);
+        }
+
+        static void Shirt()
+        {
+
+            // prepare measures
+
+            double circAddition;
+            double frontNeckUpAddition = measures.circ_bust / 20;
+
+            if (measures.circ_bust < 820) { circAddition = 60; frontNeckUpAddition -= 10; }
+            else if (measures.circ_bust < 870) { circAddition = 65; frontNeckUpAddition -= 5; }
+            else if (measures.circ_bust < 920) { circAddition = 70; }
+            else { circAddition = 75; }
+
+            double armpitBackLength = measures.height / 10 + measures.circ_bust / 20 + 3;
+
+            double backWidth = measures.circ_bust / 8 + 55 + 3 * circAddition / 13;
+            double armholeWidth = measures.circ_bust / 8 - 15 + 6 * circAddition / 13;
+            double frontWidth = measures.circ_bust / 4 - 40 + 4 * circAddition / 13;
+
+            double allWidth = backWidth + armholeWidth + frontWidth;
+
+
+            // net
+            PdfPage p = AddPatternPage(measures.len_back+measures.len_hips+ armpitBackLength, allWidth);
+            XGraphics gfx = XGraphics.FromPdfPage(p, XGraphicsUnit.Millimeter);
+            XPen pen = XPens.Black;
+
+            XPoint start = new XPoint(30, 30 + frontNeckUpAddition);
+            XPoint backBreast = new XPoint(start.X, start.Y + armpitBackLength);
+            XPoint backWaist = new XPoint(start.X, start.Y + measures.len_back);
+            XPoint backHips = new XPoint(start.X, start.Y + measures.len_back + measures.len_hips);
+            XPoint backDeflection = new XPoint(backHips.X + 20, backHips.Y);
+
+            XPoint backArmholeBreast = new XPoint(backBreast.X + backWidth, backBreast.Y);
+            XPoint centerBreast = new XPoint(backArmholeBreast.X + 2 * armholeWidth / 3, backArmholeBreast.Y);
+            XPoint frontArmholeBreast = new XPoint(backBreast.X + backWidth + armholeWidth, backBreast.Y);
+            XPoint frontBreast = new XPoint(backBreast.X + allWidth, backBreast.Y);
+
+            XPoint backArmholeNeck = new XPoint(backArmholeBreast.X, start.Y);
+            XPoint frontArmholeNeck = new XPoint(frontArmholeBreast.X, start.Y - frontNeckUpAddition);
+
+            XPoint frontNeck = new XPoint(frontBreast.X, frontArmholeNeck.Y);
+
+            XPoint frontWaist = new XPoint(frontBreast.X, backWaist.Y);
+            XPoint frontHips = new XPoint(frontBreast.X, backHips.Y);
+
+            XPoint centerWaist = new XPoint(centerBreast.X, backWaist.Y);
+            XPoint centerHips = new XPoint(centerBreast.X, backHips.Y);
+
+            gfx.DrawLine(pen, start, backHips);
+            gfx.DrawLine(pen, backArmholeNeck, backArmholeBreast);
+            gfx.DrawLine(pen, frontArmholeNeck, frontArmholeBreast);
+            gfx.DrawLine(pen, centerBreast, centerHips);
+            gfx.DrawLine(pen, frontNeck, frontHips);
+
+            gfx.DrawLine(pen, start, backArmholeNeck);
+            gfx.DrawLine(pen, frontArmholeNeck, frontNeck);
+            gfx.DrawLine(pen, backBreast, frontBreast);
+            gfx.DrawLine(pen, backWaist, frontWaist);
+            gfx.DrawLine(pen, backHips, frontHips);
+
+            // final shape
+            double backNechHoleHeight = 20;
+            double backNeckHoleWidth = measures.circ_bust / 20 + backNechHoleHeight;
+            XPoint backNeckHole = new XPoint(start.X + backNeckHoleWidth, start.Y - 20);
+
+            gfx.DrawArc(pen, new XRect(start.X - backNeckHoleWidth, start.Y - 2 * backNechHoleHeight, backNeckHoleWidth * 2, backNechHoleHeight * 2),0,90);
+
+            XPoint backArmholeIntersectio = new XPoint(backArmholeNeck.X, backArmholeNeck.Y + 10);
+
+            armpitBackLength -= 10;
+
+            // draw curve
+
         }
     }
 }
