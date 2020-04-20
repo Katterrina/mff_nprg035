@@ -83,6 +83,7 @@ namespace EasyPattern
                     wideSkirt();
                     break;
                 case Pattern.dress:
+                    Dress();
                     break;
                 case Pattern.shirt:
                     Shirt();
@@ -616,7 +617,7 @@ namespace EasyPattern
             XPoint start = new XPoint(30, 30 + frontNeckUpAddition);
             XPoint backBreast = new XPoint(start.X, start.Y + armpitLength);
             XPoint backWaist = new XPoint(start.X, start.Y + measures.len_back);
-            XPoint backHips = new XPoint(start.X, start.Y + measures.len_back + measures.len_hips);
+            XPoint backHips = new XPoint(start.X, start.Y + measures.len_back + measures.len_hips - 20);
 
             XPoint backHipsDeflection = new XPoint(backHips.X + 20, backHips.Y);
             XPoint backWaistDeflection = new XPoint(backWaist.X + 20, backWaist.Y);
@@ -758,11 +759,14 @@ namespace EasyPattern
 
             double downAddition = measures.circ_hips / 2 - (allWidth - tuckFrontWidth / 4 - patternGap) - 20;
 
-            XPoint centerTuckBackDown = new XPoint(centerHips1.X + downAddition / 2, centerHips1.Y);
-            XPoint centerTuckFrontDown = new XPoint(centerHips2.X - downAddition / 2, centerHips2.Y);
+            XPoint centerTuckBackDown = new XPoint(centerHips1.X + downAddition / 2, centerHips1.Y - 6);
+            XPoint centerTuckFrontDown = new XPoint(centerHips2.X - downAddition / 2, centerHips2.Y - 6);
 
             gfx.DrawLines(pen, new XPoint[] { centerBreast1, centerTuckBack, centerTuckBackDown });
             gfx.DrawLines(pen, new XPoint[] { centerBreast2, centerTuckFront, centerTuckFrontDown });
+
+            gfx.DrawCurve(pen, new XPoint[] { centerTuckBackDown,new XPoint(backHips.X + backWidth / 2, backHips.Y) , backHips });
+            gfx.DrawCurve(pen, new XPoint[] { centerTuckFrontDown, new XPoint(frontHips.X - frontWidth / 2, frontHips.Y), frontHips });
 
             //back 1
             double l1 = XPoint.Subtract(backBreast, backWaist).Length;
@@ -781,6 +785,203 @@ namespace EasyPattern
             XPoint back2Tuck2 = new XPoint(back2TuckUp.X + tuckBackWidth / 2, backWaist.Y);
 
             gfx.DrawLines(pen, new XPoint[] { back2TuckUp, back2Tuck1, back2TuckDown, back2Tuck2, back2TuckUp });
+
+            // back saddle
+            XPoint backSaddle1 = new XPoint(start.X, start.Y + 80);
+            XPoint backSaddle2 = new XPoint(backSaddle1.X + (backWidth) / 2, backSaddle1.Y);
+            XPoint backSaddle3 = new XPoint(backSaddle1.X + backWidth + 12, backSaddle1.Y);
+            XPoint backSaddle4 = new XPoint(backSaddle3.X, backSaddle3.Y + 5);
+            gfx.DrawLine(pen, backSaddle1, backSaddle3);
+            gfx.DrawLine(pen, backSaddle2, backSaddle4);
+        }
+
+        static void Dress()
+        {
+            double frontNeckUpAddition = 45;
+
+            double armpitLength = measures.height / 10 + measures.circ_bust / 20 + 3;
+
+            double additionBack = 5;
+            double backWidth = measures.wid_back / 2 + additionBack + 5;
+            double lenShoulder = measures.len_shoulder + additionBack;
+
+            double additionAll = 35;
+            double allWidth;
+            if (measures.circ_bust > 1000)
+            {
+                allWidth = measures.circ_bust / 2 + (measures.circ_bust - 1000) / 10 + additionAll;
+            }
+            else
+            {
+                allWidth = measures.circ_bust / 2 + additionAll;
+            }
+
+            double frontWidth = measures.circ_bust / 4 - 30;
+            double armholeWidth = allWidth - frontWidth - backWidth;
+
+            double lenBreast;
+
+            if (measures.len_breast != 0)
+            {
+                lenBreast = measures.len_breast;
+            }
+            else
+            {
+                lenBreast = measures.circ_bust / 4 + 4;
+            }
+
+            // prepare pdf
+
+            PdfPage p = AddPatternPage(measures.len_back + measures.len_knee + armpitLength, allWidth);
+            XGraphics gfx = XGraphics.FromPdfPage(p, XGraphicsUnit.Millimeter);
+
+
+            // main net 
+
+            XPoint start = new XPoint(30, 30 + frontNeckUpAddition);
+            XPoint backBreast = new XPoint(start.X, start.Y + armpitLength);
+            XPoint backWaist = new XPoint(start.X, start.Y + measures.len_back);
+            XPoint backHips = new XPoint(start.X, start.Y + measures.len_back + measures.len_hips);
+            XPoint backKnee = new XPoint(start.X, start.Y + measures.len_back + measures.len_knee);
+
+            double backDeflection = 20;
+
+            XPoint backWaistDeflection = new XPoint(backWaist.X + backDeflection, backWaist.Y);
+            XPoint backHipsDeflection = new XPoint(backHips.X + backDeflection, backHips.Y);
+            XPoint backKneeDeflection = new XPoint(backKnee.X + backDeflection, backKnee.Y);
+
+            double patternGap = 80;
+
+            XPoint backArmholeBreast = new XPoint(backBreast.X + backWidth, backBreast.Y);
+            XPoint centerBreast1 = new XPoint(backArmholeBreast.X + 2 * armholeWidth / 3, backArmholeBreast.Y);
+            XPoint centerBreast2 = new XPoint(backArmholeBreast.X + 2 * armholeWidth / 3 + patternGap, backArmholeBreast.Y);
+            XPoint frontArmholeBreast = new XPoint(backBreast.X + backWidth + armholeWidth + patternGap, backBreast.Y);
+            XPoint frontBreast = new XPoint(backBreast.X + allWidth + patternGap, backBreast.Y);
+
+            XPoint backArmholeShoulder = new XPoint(backArmholeBreast.X, start.Y);
+            XPoint frontArmholeNeck = new XPoint(frontArmholeBreast.X, start.Y - frontNeckUpAddition);
+
+            XPoint frontNeck = new XPoint(frontBreast.X, frontArmholeNeck.Y);
+
+            XPoint frontWaist = new XPoint(frontBreast.X, backWaist.Y);
+            XPoint frontHips = new XPoint(frontBreast.X, backHips.Y);
+            XPoint frontKnee = new XPoint(frontBreast.X, backKnee.Y);
+
+            XPoint centerWaist1 = new XPoint(centerBreast1.X, backWaist.Y);
+            XPoint centerHips1 = new XPoint(centerBreast1.X, backHips.Y);
+            XPoint centerKnee1 = new XPoint(centerBreast1.X, backKnee.Y);
+
+            XPoint centerWaist2 = new XPoint(centerBreast2.X, backWaist.Y);
+            XPoint centerHips2 = new XPoint(centerBreast2.X, backHips.Y);
+            XPoint centerKnee2 = new XPoint(centerBreast2.X, backKnee.Y);
+
+
+
+            gfx.DrawLine(pen, start, backKnee);
+            gfx.DrawLine(pen, backArmholeShoulder, backArmholeBreast);
+            gfx.DrawLine(pen, frontArmholeNeck, frontArmholeBreast);
+            gfx.DrawLine(pen, centerBreast1, centerKnee1);
+            gfx.DrawLine(pen, centerBreast2, centerKnee2);
+            gfx.DrawLine(pen, frontNeck, frontKnee);
+            gfx.DrawLine(pen, start, backWaistDeflection);
+            gfx.DrawLine(pen, backWaistDeflection, backKneeDeflection);
+
+            gfx.DrawLine(pen, start, backArmholeShoulder);
+            gfx.DrawLine(pen, frontArmholeNeck, frontNeck);
+            gfx.DrawLine(pen, backBreast, frontBreast);
+            gfx.DrawLine(pen, backWaist, frontWaist);
+            gfx.DrawLine(pen, backHips, frontHips);
+            gfx.DrawLine(pen, backKnee, frontKnee);
+
+            // final shape
+
+            // back neck hole
+            double backNeckHoleHeight = 20;
+            double neckHoleWidth = measures.circ_bust / 20 + 23;
+            XPoint backNeckHole = new XPoint(start.X + neckHoleWidth, start.Y - 20);
+
+            // back shoulder
+            double intersectionDown = 15;
+            XPoint backArmholeIntersection = new XPoint(backArmholeShoulder.X, backArmholeShoulder.Y + intersectionDown);
+
+            double lenAfterIntersection = lenShoulder - XPoint.Subtract(backNeckHole, backArmholeIntersection).Length + 10;
+            double a = Math.Atan((intersectionDown + backNeckHoleHeight) / (backWidth - neckHoleWidth));
+
+            double backShoulderYpos = backArmholeIntersection.Y + (Math.Sin(a) * lenAfterIntersection);
+            double backShoulderXpos = backArmholeIntersection.X + (Math.Cos(a) * lenAfterIntersection);
+
+            XPoint backShoulder = new XPoint(backShoulderXpos, backShoulderYpos);
+
+            armpitLength -= intersectionDown;
+
+
+            // front neck hole
+            double neckHoleHeight = measures.circ_bust / 20 + 30;
+            XPoint frontUpNeckHole = new XPoint(frontNeck.X - neckHoleWidth, frontNeck.Y);
+
+            // front shoulder
+            double help = measures.circ_bust / 20 - 5;
+
+            XPoint frontShoulder1 = new XPoint(frontArmholeBreast.X - help, centerBreast2.Y - Math.Sqrt(Math.Abs(Math.Pow(armpitLength - 1.5, 2) - Math.Pow(help, 2))));
+
+
+            XPoint frontBreastLineUp = new XPoint(frontBreast.X - (measures.circ_bust / 10 + 5), frontNeck.Y);
+            XPoint breastPoint = new XPoint(frontBreastLineUp.X, frontBreastLineUp.Y + lenBreast);
+
+            XPoint s1 = ShoulderCircleIntersection(frontShoulder1, breastPoint, lenShoulder, lenBreast);
+
+            double shoulderUp = XPoint.Subtract(frontBreastLineUp, frontUpNeckHole).Length;
+
+            XPoint frontShoulder2 = FindPointOnLine(frontShoulder1, s1, lenShoulder - shoulderUp);
+
+            double len = XPoint.Subtract(frontShoulder2, breastPoint).Length;
+            XPoint frontShoulder3 = new XPoint(breastPoint.X, breastPoint.Y - len);
+
+            // translate shoulder seam
+            ShiftLineParallel(ref frontShoulder1, ref frontShoulder2, gfx, pen, -10);
+            ShiftLineParallel(ref backShoulder, ref backNeckHole, gfx, pen, -10);
+            ShiftLineParallel(ref frontShoulder3, ref frontUpNeckHole, gfx, pen, -10);
+
+            //draw neck hole - using shifted shnoulder seam
+            neckHoleWidth = backNeckHole.X - start.X;
+            backNeckHoleHeight = start.Y - backNeckHole.Y;
+            neckHoleHeight = neckHoleHeight - (frontUpNeckHole.Y - frontNeck.Y);
+
+            gfx.DrawArc(pen, new XRect(start.X - neckHoleWidth, start.Y - 2 * backNeckHoleHeight, neckHoleWidth * 2, backNeckHoleHeight * 2), 0, 90);
+            gfx.DrawArc(pen, new XRect(frontUpNeckHole.X, frontUpNeckHole.Y - neckHoleHeight, neckHoleWidth * 2, neckHoleHeight * 2), 90, 90);
+
+
+            //armhole 
+
+            // back
+            XPoint armhole1 = new XPoint(backArmholeShoulder.X + 10, backArmholeIntersection.Y + (armpitLength / 2));
+            XPoint armhole2 = new XPoint(backArmholeShoulder.X + 15, backArmholeIntersection.Y + ((3 * armpitLength) / 4));
+
+            XPoint armhole3 = new XPoint(backArmholeShoulder.X + (centerBreast1.X - backArmholeShoulder.X) / 2, backArmholeIntersection.Y + ((19 * armpitLength) / 20));
+
+            // fornt
+            XPoint armhole4 = new XPoint(frontArmholeBreast.X, armhole2.Y);
+
+            // all armhole 
+            gfx.DrawCurve(pen, new XPoint[] { backShoulder, armhole1, armhole2, armhole3, centerBreast1 });
+            gfx.DrawCurve(pen, new XPoint[] { centerBreast2, armhole4, frontShoulder1 });
+
+            // draw front shoulder tuck
+            gfx.DrawLine(dashed, frontShoulder2, breastPoint);
+            gfx.DrawLine(dashed, frontShoulder3, breastPoint);
+            gfx.DrawLine(dashed, armhole4, breastPoint);
+
+
+
+
+
+            // back saddle
+            XPoint backSaddle1 = new XPoint(start.X, start.Y + 80);
+            XPoint backSaddle2 = new XPoint(backSaddle1.X + (backWidth) / 2, backSaddle1.Y);
+            XPoint backSaddle3 = new XPoint(backSaddle1.X + backWidth + 12, backSaddle1.Y);
+            XPoint backSaddle4 = new XPoint(backSaddle3.X, backSaddle3.Y + 5);
+            gfx.DrawLine(pen, backSaddle1, backSaddle3);
+            gfx.DrawLine(pen, backSaddle2, backSaddle4);
         }
     }
 }
