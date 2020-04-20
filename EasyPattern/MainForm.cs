@@ -92,12 +92,14 @@ namespace EasyPattern
 
             else
             {
-                if ((string)choiceMeasuresSet.SelectedItem == null || (string)choiceMeasuresSet.SelectedItem == "")
+                string selected = (string)choiceMeasuresSet.SelectedItem;
+                if (selected == null || selected == "")
                 {
                     MessageBox.Show("Vyberte prosím z uložených sad nebo si vytvořte novou.", "Neplatná hodnota", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
+                    PrefillForm(selected);
                     welcome.Visible = false;
                     patternChoicePanel.Visible = true;
                 }
@@ -202,13 +204,6 @@ namespace EasyPattern
         {
             measuresPanel.Visible = false;
             patternChoicePanel.Visible = true;
-
-            PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
-                                                            (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
-                                                            (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value,
-                                                            (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
-                                                            (int)len_breast.Value,(int)len_hips.Value);
-            // TODO dořešit použití dat přímo z databáze
         }
         private void backToPatternChoice_Click(object sender, EventArgs e)
         {
@@ -218,6 +213,12 @@ namespace EasyPattern
 
         private void doPattern_Click(object sender, EventArgs e)
         {
+            PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
+                                                (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
+                                                (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value,
+                                                (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
+                                                (int)len_breast.Value, (int)len_hips.Value);
+
             patternChoicePanel.Visible = false;
             measuresPanel.Visible = false;
             viewerPanel.Visible = true;
