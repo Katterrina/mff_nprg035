@@ -3,7 +3,7 @@ using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
 using System.ComponentModel;
-using System.IO;
+using System.Collections.Generic;
 
 namespace EasyPattern
 {
@@ -57,6 +57,16 @@ namespace EasyPattern
         }
     }
 
+    public struct Abscissa
+    {
+        public XPoint a;
+        public XPoint b;
+        public Abscissa(XPoint start, XPoint end)
+        {
+            a = start;
+            b = end;
+        }
+    }
     class PatternGeometry
     {
         public enum Pattern {[Description("rovná sukně")] straightSkirt, 
@@ -147,111 +157,161 @@ namespace EasyPattern
         }
 
         static XPen pen;
-        static XPen dashed;
+        static XPen dashedPen;
+        static XPen grayPen;
+
+        static XPoint start = new XPoint(30, 30);
 
         static void PreparePen()
         {
             pen = XPens.Black;
-            dashed = new XPen(XColors.Black, 1);
-            dashed.DashStyle = XDashStyle.Dash;
+            dashedPen = new XPen(XColors.Black, 1);
+            dashedPen.DashStyle = XDashStyle.Dash;
+            grayPen = new XPen(XColors.Gray, 1);
+        }
+
+        static Dictionary<string, XPoint> ShiftPoints(Dictionary<string,XPoint> line, int distanceVertical, int distanceHorizontal, bool upDirection, bool leftDirection)
+        {
+            Dictionary<string, XPoint> newLine = new Dictionary<string, XPoint>();
+
+            int distV = upDirection? -distanceVertical : distanceVertical;
+            int distH = leftDirection ? -distanceHorizontal : distanceHorizontal;
+
+            foreach (KeyValuePair<string, XPoint> point in line)
+            {
+                XPoint p = ShiftOnePoint(point.Value, distH, distV);
+                newLine.Add(point.Key, p);
+            }
+
+            return newLine;
+        }
+
+        static Dictionary<string, XPoint> ShiftPointsRight(Dictionary<string, XPoint> line, int dist)
+        {
+            return ShiftPoints(line, 0, dist, false, false);
+        }
+
+        static XPoint ShiftOnePoint(XPoint p, int distRight, int distDown)
+        {
+            return new XPoint(p.X + distRight, p.Y + distDown);
+        }
+
+        static XPoint ShiftOnePointHorizontal(XPoint p, int distRight)
+        {
+            return ShiftOnePoint(p, distRight, 0);
+        }
+
+        static XPoint ShiftOnePointVertical(XPoint p, int distDown)
+        {
+            return ShiftOnePoint(p, 0, distDown);
+        }
+
+        static Dictionary<string, Dictionary<string, XPoint>> SkirtNet(XPoint start, int lenHips, int lenKnee, int widBack, int widFront, int patternGap)
+        {
+            Dictionary<string, Dictionary<string, XPoint>> net = new Dictionary<string, Dictionary<string, XPoint>>();
+
+            Dictionary<string, XPoint> back = new Dictionary<string, XPoint>();
+
+            back.Add("waist", start);
+            back.Add("hips", ShiftOnePointVertical(start, lenHips));
+            back.Add("down", ShiftOnePointVertical(start, lenKnee));
+
+            Dictionary<string, XPoint> centerBack = ShiftPointsRight(back, widBack);
+            Dictionary<string, XPoint> centerFront = ShiftPointsRight(centerBack, patternGap);
+            Dictionary<string, XPoint> front = ShiftPointsRight(centerFront, widFront);
+
+            net.Add("back", back);
+            net.Add("centerFront", centerFront);
+            net.Add("centerBack", centerBack);
+            net.Add("front", front);
+
+            return net;
+        }
+
+        static void DrawSkirtNet(XGraphics gfx, Dictionary<string, Dictionary<string, XPoint>> n)
+        {
+            gfx.DrawLines(grayPen, new XPoint[] { n["back"]["waist"], n["front"]["waist"], n["front"]["down"], n["back"]["down"], n["back"]["waist"] });
+            gfx.DrawLine(grayPen, n["back"]["hips"], n["front"]["hips"]); 
+            gfx.DrawLine(grayPen, n["centerBack"]["waist"], n["centerBack"]["down"]);
+            gfx.DrawLine(grayPen, n["centerFront"]["waist"], n["centerFront"]["down"]);
+        }
+
+        static XPoint FindUpPointDrawHipsTuck(XGraphics gfx, XPoint up, XPoint down, int upAddition, int tuckWidth, bool back)
+        {
+            int width = back ? -tuckWidth : tuckWidth;
+
+            XPoint upTuck = ShiftOnePoint(up, width, -upAddition);
+            XPoint beziere = ShiftOnePointVertical(up, (measures.len_hips / 2));
+
+            gfx.DrawBezier(pen, upTuck, upTuck, beziere, down);
+
+            return upTuck;
         }
 
         static void wideSkirt()
         {
-            double hipsAddition = 15;
-            double downAddition = 40;
+            int centerUpAddition = 12;
+            int hipsAddition = 15;
+            int downAddition = 40;
+            int widthAll = measures.circ_hips / 2 + hipsAddition;
 
-            PdfPage p = AddPatternPage(measures.len_knee, measures.circ_hips / 2 + hipsAddition + downAddition);
-            XGraphics gfx = XGraphics.FromPdfPage(p, XGraphicsUnit.Millimeter);
+            PdfPage page = AddPatternPage(measures.len_knee, widthAll + downAddition);
+            XGraphics gfx = XGraphics.FromPdfPage(page, XGraphicsUnit.Millimeter);
 
-            XPoint start = new XPoint(30, 30);
-            XPoint hipsBack = new XPoint(start.X, start.Y + measures.len_hips);
-            XPoint downBack = new XPoint(start.X, start.Y + measures.len_knee);
-
-            double widthOnePart = measures.circ_hips / 4 + hipsAddition / 2;
-            double widthAll = 2 * widthOnePart + downAddition;
-
-            double plusUpHips = 10;
-
-            XPoint upCenter1 = new XPoint(start.X + widthOnePart, start.Y - plusUpHips);
-            XPoint hipsCenter1 = new XPoint(hipsBack.X + widthOnePart, hipsBack.Y);
-
-            XPoint upCenter2 = new XPoint(start.X + widthOnePart + downAddition, start.Y - plusUpHips);
-            XPoint hipsCenter2 = new XPoint(hipsBack.X + widthOnePart + downAddition, hipsBack.Y);
-
-            XPoint upFront = new XPoint(start.X + widthAll, start.Y);
-            XPoint hipsFront = new XPoint(start.X + widthAll, hipsBack.Y);
-            XPoint downFront = new XPoint(start.X + widthAll, start.Y + measures.len_knee);
-
-            gfx.DrawLine(pen, start, downBack);
-            gfx.DrawLine(pen, start, upFront);
-            gfx.DrawLine(pen, downBack, downFront);
-            gfx.DrawLine(pen, upFront, downFront);
-            gfx.DrawLine(pen, upCenter1, hipsCenter1);
-            gfx.DrawLine(pen, upCenter2, hipsCenter2);
-            gfx.DrawLine(pen, hipsBack, hipsFront);
+            Dictionary<string, Dictionary<string, XPoint>> net = SkirtNet(PatternGeometry.start, measures.len_hips, measures.len_knee, widthAll / 2, widthAll / 2, downAddition);
+            DrawSkirtNet(gfx, net);
 
             // ------------------- TUCKS ------------------------
 
-            double allTucksWidth = (measures.circ_hips + hipsAddition - measures.circ_waist) / 2;
-            double frontTuckWidth = 3 * allTucksWidth / 14;
-            double backTuckWidth = 4 * allTucksWidth / 14;
-            double hipsTuckWidth = allTucksWidth / 2;
+            int allTucksWidth = widthAll - measures.circ_waist/ 2;
+            int frontTuckWidth = 3 * allTucksWidth / 14;
+            int backTuckWidth = 4 * allTucksWidth / 14;
+            int centerTuckWidth = allTucksWidth / 2;
 
-            XPoint upFrontTuck = new XPoint(upFront.X - widthOnePart / 3, upFront.Y);
-            XPoint downFrontTuck = new XPoint(upFrontTuck.X, upFrontTuck.Y + measures.len_hips -30);
+            int tuckDepth = measures.len_hips - 30;
 
-            XPoint upBackTuck = new XPoint(start.X + widthOnePart / 3, start.Y);
-            XPoint downBackTuck = new XPoint(upBackTuck.X, upBackTuck.Y + measures.len_hips - 30);
+            // hips tuck
 
-            gfx.DrawLine(pen, upFrontTuck, downFrontTuck);
-            gfx.DrawLine(pen, upBackTuck, downBackTuck);
+            XPoint centerUpBack = FindUpPointDrawHipsTuck(gfx, net["centerBack"]["waist"], net["centerBack"]["hips"], centerUpAddition, centerTuckWidth / 2, true);
+            XPoint centerUpFront = FindUpPointDrawHipsTuck(gfx, net["centerFront"]["waist"], net["centerFront"]["hips"], centerUpAddition, centerTuckWidth / 2, false);
 
-            XPoint hipsTuckBack = new XPoint(upCenter1.X - (hipsTuckWidth / 2), upCenter1.Y);
-            XPoint hipsTuckFront = new XPoint(upCenter2.X + (hipsTuckWidth / 2), upCenter2.Y);
+            //// front tuck
 
-            gfx.DrawLine(pen, start, hipsTuckBack);
-            gfx.DrawLine(pen, upFront, hipsTuckFront);
+            //XPoint upFrontTuck = new XPoint(upFront.X - widthOnePart / 3, upFront.Y);
+            //XPoint downFrontTuck = new XPoint(upFrontTuck.X, upFrontTuck.Y + measures.len_hips -30);
 
-            XPoint hipsBezierDown1 = new XPoint(hipsCenter1.X, hipsCenter1.Y - (measures.len_hips / 2));
-            XPoint hipsBezierDown2 = new XPoint(hipsCenter2.X, hipsCenter2.Y - (measures.len_hips / 2));
+            //double hFT1 = (upFront.X - upFrontTuck.X + (frontTuckWidth / 2)) * plusUpHips / widthOnePart;
+            //XPoint frontTuck1 = new XPoint(upFrontTuck.X - (frontTuckWidth / 2), upFrontTuck.Y - hFT1);
+            //gfx.DrawLine(pen, frontTuck1, downFrontTuck);
 
-            gfx.DrawBezier(pen,hipsTuckBack, hipsTuckBack, hipsBezierDown1, hipsCenter1);
-            gfx.DrawBezier(pen, hipsTuckFront, hipsTuckFront, hipsBezierDown2, hipsCenter2);
+            //double hFT2 = (upFront.X - upFrontTuck.X - (frontTuckWidth / 2)) * plusUpHips / widthOnePart;
+            //XPoint frontTuck2 = new XPoint(upFrontTuck.X + (frontTuckWidth / 2), upFrontTuck.Y - hFT2);
+            //gfx.DrawLine(pen, frontTuck2, downFrontTuck);
 
-            // front tuck
+            //XPoint FTDownHem = new XPoint(downFrontTuck.X,downBack.Y);
+            //gfx.DrawLine(pen, FTDownHem, downFrontTuck);
 
-            double hFT1 = (upFront.X - upFrontTuck.X + (frontTuckWidth / 2)) * plusUpHips / widthOnePart;
-            XPoint frontTuck1 = new XPoint(upFrontTuck.X - (frontTuckWidth / 2), upFrontTuck.Y - hFT1);
-            gfx.DrawLine(pen, frontTuck1, downFrontTuck);
+            //// back tuck
 
-            double hFT2 = (upFront.X - upFrontTuck.X - (frontTuckWidth / 2)) * plusUpHips / widthOnePart;
-            XPoint frontTuck2 = new XPoint(upFrontTuck.X + (frontTuckWidth / 2), upFrontTuck.Y - hFT2);
-            gfx.DrawLine(pen, frontTuck2, downFrontTuck);
+            //XPoint upBackTuck = new XPoint(start.X + widthOnePart / 3, start.Y);
+            //XPoint downBackTuck = new XPoint(upBackTuck.X, upBackTuck.Y + measures.len_hips - 30);
 
-            XPoint FTDownHem = new XPoint(downFrontTuck.X,downBack.Y);
-            gfx.DrawLine(pen, FTDownHem, downFrontTuck);
+            //double hBT1 = (upBackTuck.X + (backTuckWidth / 2) - start.X) * plusUpHips / widthOnePart;
+            //XPoint backTuck1 = new XPoint(upBackTuck.X + (backTuckWidth / 2), upBackTuck.Y - hBT1);
+            //gfx.DrawLine(pen, backTuck1, downBackTuck);
 
-            // back tuck
+            //double hBT2 = (upBackTuck.X - (backTuckWidth / 2) - start.X) * plusUpHips / widthOnePart;
+            //XPoint backTuck2 = new XPoint(upBackTuck.X - (backTuckWidth / 2), upBackTuck.Y - hBT2);
+            //gfx.DrawLine(pen, backTuck2, downBackTuck);
 
+            //XPoint BTDownHem = new XPoint(downBackTuck.X, downBack.Y);
+            //gfx.DrawLine(pen, BTDownHem, downBackTuck);
 
-            double hBT1 = (upBackTuck.X + (backTuckWidth / 2) - start.X) * plusUpHips / widthOnePart;
-            XPoint backTuck1 = new XPoint(upBackTuck.X + (backTuckWidth / 2), upBackTuck.Y - hBT1);
-            gfx.DrawLine(pen, backTuck1, downBackTuck);
+            //// down edge
 
-            double hBT2 = (upBackTuck.X - (backTuckWidth / 2) - start.X) * plusUpHips / widthOnePart;
-            XPoint backTuck2 = new XPoint(upBackTuck.X - (backTuckWidth / 2), upBackTuck.Y - hBT2);
-            gfx.DrawLine(pen, backTuck2, downBackTuck);
-
-            XPoint BTDownHem = new XPoint(downBackTuck.X, downBack.Y);
-            gfx.DrawLine(pen, BTDownHem, downBackTuck);
-
-            // down edge
-
-
-            XPoint downCenter = new XPoint(start.X + (widthAll/2),downBack.Y);
-            gfx.DrawLine(pen, hipsCenter1, downCenter);
-            gfx.DrawLine(pen, hipsCenter2, downCenter);
+            //XPoint downCenter = new XPoint(start.X + (widthAll/2),downBack.Y);
+            //gfx.DrawLine(pen, hipsCenter1, downCenter);
+            //gfx.DrawLine(pen, hipsCenter2, downCenter);
         }
 
         static void straightSkirt()
@@ -512,8 +572,8 @@ namespace EasyPattern
             gfx.DrawCurve(pen, new XPoint[] { centerBreast, tuckFront, centerDown });
 
             // front fastening
-            DrawLineParallel(frontNeck, frontHips, gfx, dashed, -15); 
-            DrawLineParallel(frontNeck, frontHips, gfx, dashed, 15); 
+            DrawLineParallel(frontNeck, frontHips, gfx, dashedPen, -15); 
+            DrawLineParallel(frontNeck, frontHips, gfx, dashedPen, 15); 
 
             // back saddle
             XPoint backSaddle1 = new XPoint(start.X, start.Y + 80);
@@ -733,9 +793,9 @@ namespace EasyPattern
             gfx.DrawCurve(pen, new XPoint[] { centerBreast2, armhole4, frontShoulder1 });
 
             // draw front shoulder tuck
-            gfx.DrawLine(dashed, frontShoulder2, breastPoint);
-            gfx.DrawLine(dashed, frontShoulder3, breastPoint);
-            gfx.DrawLine(dashed, armhole4, breastPoint);
+            gfx.DrawLine(dashedPen, frontShoulder2, breastPoint);
+            gfx.DrawLine(dashedPen, frontShoulder3, breastPoint);
+            gfx.DrawLine(dashedPen, armhole4, breastPoint);
 
             // ---------------tucks------------------------------------
             double tuckFrontWidth = frontWidth - measures.circ_waist / 4;
@@ -967,9 +1027,9 @@ namespace EasyPattern
             gfx.DrawCurve(pen, new XPoint[] { centerBreast2, armhole4, frontShoulder1 });
 
             // draw front shoulder tuck
-            gfx.DrawLine(dashed, frontShoulder2, breastPoint);
-            gfx.DrawLine(dashed, frontShoulder3, breastPoint);
-            gfx.DrawLine(dashed, armhole4, breastPoint);
+            gfx.DrawLine(dashedPen, frontShoulder2, breastPoint);
+            gfx.DrawLine(dashedPen, frontShoulder3, breastPoint);
+            gfx.DrawLine(dashedPen, armhole4, breastPoint);
 
 
 
