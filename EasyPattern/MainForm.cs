@@ -33,7 +33,7 @@ namespace EasyPattern
 
         private void loadPatternChoice()
         {
-            patternToDo.DataSource = Enum.GetValues(typeof(PatternGeometry.Pattern))
+            patternToDo.DataSource = Enum.GetValues(typeof(PatternControl.Pattern))
                                          .Cast<Enum>()
                                          .Select(value => new
                                          {
@@ -158,7 +158,7 @@ namespace EasyPattern
                 string note = popup.note.Text;
 
                 next2_Click(sender, e);
-                InsertDataSetToDatabase(name, note, PatternGeometry.measures);
+                InsertDataSetToDatabase(name, note, PatternControl.measures);
             }
 
             else
@@ -213,7 +213,7 @@ namespace EasyPattern
 
         private void doPattern_Click(object sender, EventArgs e)
         {
-            PatternGeometry.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
+            PatternControl.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
                                                 (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
                                                 (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value,
                                                 (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
@@ -225,7 +225,7 @@ namespace EasyPattern
 
             folderBrowserDialog.ShowDialog();
             string path = folderBrowserDialog.SelectedPath;
-            string viewPath = PatternGeometry.PdfPattern((PatternGeometry.Pattern)patternToDo.SelectedIndex, path);
+            string viewPath = PatternControl.PdfPattern((PatternControl.Pattern)patternToDo.SelectedIndex, path);
 
 
             pdfViewer.Document = Patagames.Pdf.Net.PdfDocument.Load(viewPath);
