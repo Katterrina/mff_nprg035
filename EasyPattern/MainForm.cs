@@ -158,7 +158,7 @@ namespace EasyPattern
                 string note = popup.note.Text;
 
                 next2_Click(sender, e);
-                InsertDataSetToDatabase(name, note, PatternControl.measures);
+                InsertDataSetToDatabase(name, note, fromFormToMeasures());
             }
 
             else
@@ -211,13 +211,19 @@ namespace EasyPattern
             viewerPanel.Visible = false;
         }
 
-        private void doPattern_Click(object sender, EventArgs e)
+        private MeasuresData fromFormToMeasures()
         {
-            PatternControl.measures = new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
+            return new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
                                                 (int)circ_hips.Value, (int)len_back.Value, (int)wid_back.Value,
                                                 (int)len_knee.Value, (int)len_shoulder.Value, (int)len_sleeve.Value,
                                                 (int)circ_neck.Value, (int)circ_sleeve.Value, (int)len_front.Value,
                                                 (int)len_breast.Value, (int)len_hips.Value);
+        }
+
+        private void doPattern_Click(object sender, EventArgs e)
+        {
+           
+            PatternControl control = new PatternControl(fromFormToMeasures());
 
             patternChoicePanel.Visible = false;
             measuresPanel.Visible = false;
@@ -225,7 +231,7 @@ namespace EasyPattern
 
             folderBrowserDialog.ShowDialog();
             string path = folderBrowserDialog.SelectedPath;
-            string viewPath = PatternControl.PdfPattern((PatternControl.Pattern)patternToDo.SelectedIndex, path);
+            string viewPath = control.PdfPattern((PatternControl.Pattern)patternToDo.SelectedIndex, path);
 
 
             pdfViewer.Document = Patagames.Pdf.Net.PdfDocument.Load(viewPath);
