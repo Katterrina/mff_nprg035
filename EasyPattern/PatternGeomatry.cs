@@ -53,8 +53,8 @@ namespace EasyPattern
             this.circ_neck = circ_neck;
             this.len_hips = len_hips;
             if (circ_sleeve == 0) { this.circ_sleeve = 22; } else { this.circ_sleeve = circ_sleeve; }
-            if (len_front == 0) { this.len_front = 0; } else { this.len_front = len_front; } //TODO len_front
-            if (len_breast == 0) { this.len_breast = 0; } else { this.len_breast = len_breast; } //TODO len_breast
+            if (len_front == 0) { this.len_front = len_back + 45; } else { this.len_front = len_front; }
+            if (len_breast == 0) { this.len_breast = circ_bust / 4 + 40; } else { this.len_breast = len_breast; }
         }
     }
     public struct OrientedAbscissa
@@ -107,13 +107,15 @@ namespace EasyPattern
                     sSkirt.drawPattern();
                     break;
                 case Pattern.wideSkirt:
-                    PatternDrawing wSkirt = new WideSkirt(pdfDoc, m.circ_waist, m.circ_hips, m.len_hips, m.len_knee);
+                    PatternDrawing wSkirt 
+                        = new WideSkirt(pdfDoc, m.circ_waist, m.circ_hips, m.len_hips, m.len_knee);
                     wSkirt.drawPattern();
                     break;
                 case Pattern.dress:
                     break;
                 case Pattern.shirt:
-                    PatternDrawing shirt = new Shirt(pdfDoc, m.height, m.circ_bust, m.circ_waist, m.circ_hips,m.circ_neck, m.len_hips, m.len_back, m.wid_back, m.len_shoulder, m.len_breast);
+                    PatternDrawing shirt 
+                        = new Shirt(pdfDoc, m.height, m.circ_bust, m.circ_waist, m.circ_hips,m.circ_neck, m.len_hips, m.len_back, m.wid_back, m.len_shoulder, m.len_breast);
                     shirt.drawPattern();
                     break;
                 case Pattern.blouse:
@@ -311,7 +313,7 @@ namespace EasyPattern
             this.lenBack = lenBack;
             this.widthBack = widthBack / 2;
             this.lenShoulder = lenShoulder;
-            this.depthBreastPoint = (depthBreastPoint == 0) ? lenBack + 45 : depthBreastPoint;
+            this.depthBreastPoint = depthBreastPoint;
             this.widthNeck = PGeometry.Perimetr(circNeck);
         }
 
