@@ -85,6 +85,7 @@
             this.pdfViewer = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
             this.pdfToolStripZoomEx = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.drawNet = new System.Windows.Forms.CheckBox();
             this.welcome.SuspendLayout();
             this.measuresPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.len_hips)).BeginInit();
@@ -164,7 +165,7 @@
             this.welcome.Controls.Add(this.updateMeasures);
             this.welcome.Controls.Add(this.choiceMeasuresSet);
             this.welcome.Controls.Add(this.welcomeText);
-            this.welcome.Location = new System.Drawing.Point(12, 78);
+            this.welcome.Location = new System.Drawing.Point(12, 73);
             this.welcome.Name = "welcome";
             this.welcome.Size = new System.Drawing.Size(963, 530);
             this.welcome.TabIndex = 6;
@@ -214,7 +215,7 @@
             this.measuresPanel.Controls.Add(this.label3);
             this.measuresPanel.Controls.Add(this.label2);
             this.measuresPanel.Controls.Add(this.label1);
-            this.measuresPanel.Location = new System.Drawing.Point(12, 75);
+            this.measuresPanel.Location = new System.Drawing.Point(9, 70);
             this.measuresPanel.Name = "measuresPanel";
             this.measuresPanel.Size = new System.Drawing.Size(963, 533);
             this.measuresPanel.TabIndex = 7;
@@ -592,11 +593,12 @@
             // 
             // patternChoicePanel
             // 
+            this.patternChoicePanel.Controls.Add(this.drawNet);
             this.patternChoicePanel.Controls.Add(this.toWelcome2);
             this.patternChoicePanel.Controls.Add(this.doPattern);
             this.patternChoicePanel.Controls.Add(this.label15);
             this.patternChoicePanel.Controls.Add(this.patternToDo);
-            this.patternChoicePanel.Location = new System.Drawing.Point(12, 75);
+            this.patternChoicePanel.Location = new System.Drawing.Point(9, 67);
             this.patternChoicePanel.Name = "patternChoicePanel";
             this.patternChoicePanel.Size = new System.Drawing.Size(966, 530);
             this.patternChoicePanel.TabIndex = 8;
@@ -646,7 +648,7 @@
             this.viewerPanel.Controls.Add(this.pdfToolStripRotate1);
             this.viewerPanel.Controls.Add(this.pdfToolStripZoomEx);
             this.viewerPanel.Controls.Add(this.pdfViewer);
-            this.viewerPanel.Location = new System.Drawing.Point(9, 67);
+            this.viewerPanel.Location = new System.Drawing.Point(6, 62);
             this.viewerPanel.Name = "viewerPanel";
             this.viewerPanel.Size = new System.Drawing.Size(969, 541);
             this.viewerPanel.TabIndex = 9;
@@ -659,6 +661,7 @@
             this.end.TabIndex = 4;
             this.end.Text = "Konec";
             this.end.UseVisualStyleBackColor = true;
+            this.end.Click += new System.EventHandler(this.end_Click);
             // 
             // toWelcome3
             // 
@@ -750,15 +753,27 @@
         600F,
         800F};
             // 
+            // drawNet
+            // 
+            this.drawNet.AutoSize = true;
+            this.drawNet.Checked = true;
+            this.drawNet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.drawNet.Location = new System.Drawing.Point(339, 223);
+            this.drawNet.Name = "drawNet";
+            this.drawNet.Size = new System.Drawing.Size(204, 17);
+            this.drawNet.TabIndex = 8;
+            this.drawNet.Text = "vykreslit střih včetně konstrukční sítě";
+            this.drawNet.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 620);
-            this.Controls.Add(this.header);
             this.Controls.Add(this.viewerPanel);
-            this.Controls.Add(this.measuresPanel);
             this.Controls.Add(this.patternChoicePanel);
+            this.Controls.Add(this.measuresPanel);
+            this.Controls.Add(this.header);
             this.Controls.Add(this.welcome);
             this.Name = "MainForm";
             this.Text = "Střihovátko";
@@ -850,6 +865,7 @@
         private Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripRotate pdfToolStripRotate1;
         private System.Windows.Forms.NumericUpDown len_hips;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox drawNet;
     }
 }
 

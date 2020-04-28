@@ -223,7 +223,7 @@ namespace EasyPattern
         private void doPattern_Click(object sender, EventArgs e)
         {
            
-            PatternControl control = new PatternControl(fromFormToMeasures());
+            PatternControl control = new PatternControl(fromFormToMeasures(), drawNet.Checked);
 
             patternChoicePanel.Visible = false;
             measuresPanel.Visible = false;
@@ -235,6 +235,11 @@ namespace EasyPattern
 
 
             pdfViewer.Document = Patagames.Pdf.Net.PdfDocument.Load(viewPath);
+        }
+
+        private void end_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 
