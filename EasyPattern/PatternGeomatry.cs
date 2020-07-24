@@ -185,7 +185,26 @@ namespace EasyPattern
             return p;
         }
 
-        public static XPoint start = new XPoint(30, 30);
+        public static XPoint start = new XPoint(30, 85);
+
+        public static void WriteBasicInfoToPdf(ref XGraphics gfx)
+        {
+            XFont font = new XFont("Arial", 12);
+
+            DateTime now = DateTime.Now;
+            string text = "Střih byl vygenerován " + now.ToString();
+            gfx.DrawString(text, font, XBrushes.Black, 30, 40);
+
+            XPen p = XPens.Black;
+            gfx.DrawLine(p, new XPoint(30,50), new XPoint(130,50));
+
+            for (int i = 30; i <= 130; i += 10)
+            {
+                gfx.DrawLine(p, new XPoint(i, 50), new XPoint(i, 55));
+            }
+
+            gfx.DrawString("10 cm", font, XBrushes.Black, 140, 55);
+        }
     }
 
     interface PatternDrawing
@@ -256,7 +275,9 @@ namespace EasyPattern
         protected static XGraphics createPdfGraphics(int patternHeight, int patternWidth, PdfDocument pdfDoc)
         {
             PdfPage page = PdfControl.AddPage(patternHeight, patternWidth, pdfDoc);
-            return XGraphics.FromPdfPage(page, XGraphicsUnit.Millimeter);
+            XGraphics g = XGraphics.FromPdfPage(page, XGraphicsUnit.Millimeter);
+            PdfControl.WriteBasicInfoToPdf(ref g);
+            return g;
         }
 
         protected static Dictionary<string, XPoint> ShiftPoints(Dictionary<string, XPoint> line, int distanceVertical, int distanceHorizontal, bool upDirection, bool leftDirection)
@@ -320,7 +341,7 @@ namespace EasyPattern
             this.widthHips = circHips / 2;
             this.lenHips = lenHips;
             this.lenBack = lenBack;
-            this.widthBack = widthBack / 2;
+            this.widthBack = widthBack / 2 + backDeflection / 2;
             this.lenShoulder = lenShoulder;
             this.widthNeck = PGeometry.Perimetr(circNeck);
         }
@@ -388,9 +409,8 @@ namespace EasyPattern
             gfx.DrawLine(p, n["chest"]["centerBack"], n["down"]["centerBack"]);
         }
 
-        protected void drawContour(XGraphics gfx, XPen pen, XPoint start, XPoint backBreak, XPoint backDown, XPoint centerDown, XPoint frontDown, XPoint end)
+        protected void drawContour(XGraphics gfx, XPen pen, XPoint start, XPoint backBreak, XPoint backHips, XPoint backDown, XPoint centerDown, XPoint frontDown, XPoint end)
         {
-            backDown = PGeometry.ShiftOnePointHorizontal(backDown, backDeflection);
             backBreak = PGeometry.ShiftOnePointHorizontal(backBreak, backDeflection);
 
             int d1 = (int)(2 * (centerDown.X - backDown.X) / 3);
@@ -399,7 +419,7 @@ namespace EasyPattern
             int d2 = (int)(2 * (frontDown.X - centerDown.X) / 3);
             XPoint h2 = PGeometry.ShiftOnePointHorizontal(frontDown, -d2);
 
-            gfx.DrawLines(pen, new XPoint[] { start, backBreak, backDown, h1, centerDown, h2, frontDown, end});
+            gfx.DrawLines(pen, new XPoint[] { start, backBreak, backHips, backDown, h1, centerDown, h2, frontDown, end});
         }
 
         protected static XPoint FrontShoulderCircleIntersection(XPoint A, XPoint B, double Ar, double Br)
@@ -616,6 +636,7 @@ namespace EasyPattern
             drawContour(gfx, pen, net["neck"]["back"],
                 net["down"]["back"],
                 net["down"]["back"],
+                net["down"]["back"],
                 shiftedDownCenter,
                 net["down"]["front"],
                 new XPoint(net["neck"]["front"].X, frontShoulder.end.Y + widthNeck + 20));
@@ -669,23 +690,18 @@ namespace EasyPattern
             gfx = createPdfGraphics(lenFront + lenHips, widthChestWithAddition, pdfDoc);
         }
 
-        XPoint FrontShoulderBackPoint(XPoint armholeNetPoint, int armholeHeight, int widChest)
+        protected static XPoint FindFrontShoulderPoint(XPoint breast, XPoint currentShoulder, int endXCoor)
         {
-            return PGeometry.ShiftOnePoint(armholeNetPoint, -(widChest / 10 - 7), -(armholeHeight-15));
-        }
+            int tuckLength = (int)XPoint.Subtract(currentShoulder, breast).Length;
 
-        protected OrientedAbscissa FrontShoulder(XPoint armholeNetPoint, XPoint breastPoint, int armholeHeight, int shortageShoulderLine)
-        {
-            XPoint backPoint = FrontShoulderBackPoint(armholeNetPoint, armholeHeight, widthChest);
-            XPoint upPoint = FrontShoulderCircleIntersection(backPoint, breastPoint, lenShoulder, depthBreastPoint);
+            while (currentShoulder.X > endXCoor)
+            {
+                XPoint shoulderShifted = PGeometry.ShiftOnePointHorizontal(currentShoulder, -1);
+                XPoint newShoulder = PGeometry.FindPointOnLine(breast, shoulderShifted, -tuckLength);
+                currentShoulder = newShoulder;
+            }
 
-            XPoint newUpPoint = PGeometry.FindPointOnLine(backPoint, upPoint, lenShoulder - shortageShoulderLine);
-
-            OrientedAbscissa frontShoulder = new OrientedAbscissa(backPoint, newUpPoint);
-
-            PGeometry.ShiftLineParallel(ref frontShoulder.start, ref frontShoulder.end, -10);
-
-            return frontShoulder;
+            return currentShoulder;
         }
 
         protected OrientedAbscissa FrontShoulderUp(XPoint neckNetPoint)
@@ -697,6 +713,25 @@ namespace EasyPattern
             PGeometry.ShiftLineParallel(ref frontShoulderUp.start, ref frontShoulderUp.end, -10);
 
             return frontShoulderUp;
+        }
+
+        protected OrientedAbscissa FrontShoulder(OrientedAbscissa frontShoulderUp, XPoint armholeNetPoint, XPoint breastPoint)
+        {
+            int tuckLength = (int)XPoint.Subtract(frontShoulderUp.end, breastPoint).Length;
+
+            int endXCoor = (int)armholeNetPoint.X - (widthChest / 10 - 7);
+
+            XPoint startBackPoint = PGeometry.FindPointOnLine(frontShoulderUp.start, frontShoulderUp.end, -lenShoulder);
+            XPoint backPoint = FindFrontShoulderPoint(breastPoint, startBackPoint, endXCoor);
+
+            int lenShoulderRemaider = lenShoulder - (int)frontShoulderUp.len;
+
+            XPoint upPoint = FrontShoulderCircleIntersection(backPoint, breastPoint, lenShoulderRemaider, tuckLength);
+
+            OrientedAbscissa frontShoulder = new OrientedAbscissa(backPoint, upPoint);
+            PGeometry.ShiftLineParallel(ref frontShoulder.start, ref frontShoulder.end, -10);
+
+            return frontShoulder;
         }
 
         protected void drawShoulderPart(XGraphics gfx, XPen pen, OrientedAbscissa back, OrientedAbscissa frontUp, OrientedAbscissa front, XPoint breastPoint, XPoint neckNetBack, XPoint neckNetFront)
@@ -742,10 +777,11 @@ namespace EasyPattern
             XPoint breastPoint = PGeometry.ShiftOnePoint(net["neck"]["front"], -widBreastPoint, depthBreastPoint);
 
             OrientedAbscissa frontShoulderUp = FrontShoulderUp(net["neck"]["front"]);
-            OrientedAbscissa frontShoulder = FrontShoulder(net["chest"]["armholeFront"], breastPoint, armholeHeight, (int)frontShoulderUp.len);
+            //OrientedAbscissa frontShoulder = FrontShoulder(net["chest"]["armholeFront"], breastPoint, armholeHeight, (int)frontShoulderUp.len);
+            OrientedAbscissa frontShoulder = FrontShoulder(frontShoulderUp, net["chest"]["armholeFront"], breastPoint);
 
             OrientedAbscissa backArmholeHelpPoints = findBackArmholeHelpPoints(backShoulder.end, net["chest"]["armholeBack"]);
-            XPoint armholeFrontHelpPoint = new XPoint(net["chest"]["armholeFront"].X, backArmholeHelpPoints.end.Y);
+            XPoint armholeFrontHelpPoint = new XPoint(net["chest"]["armholeFront"].X + 10, backArmholeHelpPoints.end.Y - 15);
 
             XPoint downCenter = PGeometry.ShiftOnePointVertical(PGeometry.FindLineCenter(new OrientedAbscissa(net["down"]["centerBack"], net["down"]["centerFront"])), -7);
 
@@ -756,6 +792,7 @@ namespace EasyPattern
             drawContour(gfx, pen,
                 net["neck"]["back"],
                 net["waist"]["back"],
+                net["hips"]["back"],
                 net["down"]["back"],
                 downCenter,
                 net["down"]["front"],
@@ -799,7 +836,7 @@ namespace EasyPattern
             lenPattern = lenKnee + lenBack;
             this.patternGap = widthHips - widthChest + (widFront - widthWaist / 2) / 2 + 2 * downAddition;
 
-            pdfDoc.Pages.RemoveAt(pdfDoc.Pages.Count-1); // todo: this is bad, it is because the blouse contructor creates its own page, do it better
+            pdfDoc.Pages.RemoveAt(pdfDoc.Pages.Count-1); // todo: it is because the blouse contructor creates its own page, do it better
             gfx = createPdfGraphics(lenPattern, widthChestWithAddition, pdfDoc);
         }
 
@@ -820,10 +857,11 @@ namespace EasyPattern
             XPoint breastPoint = PGeometry.ShiftOnePoint(net["neck"]["front"], -widBreastPoint, depthBreastPoint);
 
             OrientedAbscissa frontShoulderUp = FrontShoulderUp(net["neck"]["front"]);
-            OrientedAbscissa frontShoulder = FrontShoulder(net["chest"]["armholeFront"], breastPoint, armholeHeight, (int)frontShoulderUp.len);
+            //OrientedAbscissa frontShoulder = FrontShoulder(net["chest"]["armholeFront"], breastPoint, armholeHeight, (int)frontShoulderUp.len);
+            OrientedAbscissa frontShoulder = FrontShoulder(frontShoulderUp, net["chest"]["armholeFront"], breastPoint);
 
             OrientedAbscissa backArmholeHelpPoints = findBackArmholeHelpPoints(backShoulder.end, net["chest"]["armholeBack"]);
-            XPoint armholeFrontHelpPoint = new XPoint(net["chest"]["armholeFront"].X, backArmholeHelpPoints.end.Y);
+            XPoint armholeFrontHelpPoint = new XPoint(net["chest"]["armholeFront"].X, backArmholeHelpPoints.end.Y - 15);
 
             XPoint downCenter = PGeometry.ShiftOnePointVertical(PGeometry.FindLineCenter(new OrientedAbscissa(net["down"]["centerBack"], net["down"]["centerFront"])), -7);
 
@@ -834,6 +872,7 @@ namespace EasyPattern
             drawContour(gfx, pen,
                 net["neck"]["back"],
                 net["waist"]["back"],
+                net["hips"]["back"],
                 net["down"]["back"],
                 downCenter,
                 net["down"]["front"],

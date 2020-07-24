@@ -19,7 +19,7 @@ namespace EasyPattern
     public partial class MainForm : Form
     {
         public readonly string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;
-                                             AttachDbFilename=C:\Users\Kateřina\Desktop\C#_zapoctak\EasyPattern\EasyPattern\MeasursDatabase.mdf;
+                                             AttachDbFilename=C:\Users\Katerina\Desktop\C#_zapoctak\EasyPattern\EasyPattern\MeasursDatabase.mdf;
                                              Integrated Security=True";
         public MainForm()
         {
