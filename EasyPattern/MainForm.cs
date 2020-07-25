@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using PdfSharp;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
-using System.IO;
 
 namespace EasyPattern
 {
@@ -31,21 +22,31 @@ namespace EasyPattern
             loadPatternChoice();
         }
 
+        /// <summary>
+        /// Load pattern options from PatternControl.Pattern enum.
+        /// </summary>
         private void loadPatternChoice()
         {
             patternToDo.DataSource = Enum.GetValues(typeof(PatternControl.Pattern))
                                          .Cast<Enum>()
-                                         .Select(value => new
+                                         .Select
+                                         (value => new
                                          {
-                                            (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
-                                            value
-                                         })
+                                            (Attribute.GetCustomAttribute(
+                                                value.GetType().GetField(value.ToString()),
+                                                typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
+                                             value
+                                         }
+                                         )
                                          .OrderBy(item => item.value)
                                          .ToList();
             patternToDo.DisplayMember = "Description";
             patternToDo.ValueMember = "value";
         }
 
+        /// <summary>
+        /// Load measures choice from database.
+        /// </summary>
         private void loadMeasureChoice()
         {
             choiceMeasuresSet.Items.Clear();
@@ -95,7 +96,8 @@ namespace EasyPattern
                 string selected = (string)choiceMeasuresSet.SelectedItem;
                 if (selected == null || selected == "")
                 {
-                    MessageBox.Show("Vyberte prosím z uložených sad nebo si vytvořte novou.", "Neplatná hodnota", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Vyberte prosím z uložených sad nebo si vytvořte novou.",
+                        "Neplatná hodnota", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -108,6 +110,10 @@ namespace EasyPattern
             
         }
 
+        /// <summary>
+        /// Load chosen measures from database to prefill measures form.
+        /// </summary>
+        /// <param name="nameOfMeasuresSet">string name of measures set</param>
         private void PrefillForm(string nameOfMeasuresSet)
         {
             string sql = $"SELECT * FROM MeasuresSets WHERE name='{nameOfMeasuresSet}'";
@@ -147,6 +153,9 @@ namespace EasyPattern
             }
         }
 
+        /// <summary>
+        /// Save measures data from measures form to database.
+        /// </summary>
         private void save_Click(object sender, EventArgs e)
         {
             SaveDialogForm popup = new SaveDialogForm();
@@ -170,6 +179,12 @@ namespace EasyPattern
 
         }
 
+        /// <summary>
+        /// Insert measures set to database.
+        /// </summary>
+        /// <param name="name">name of data set</param>
+        /// <param name="note">note to data set</param>
+        /// <param name="m">MeasuresData data</param>
         private void InsertDataSetToDatabase(string name, string note, MeasuresData m)
         {
             string sql = $"INSERT INTO MeasuresSets " +
@@ -211,6 +226,10 @@ namespace EasyPattern
             viewerPanel.Visible = false;
         }
 
+        /// <summary>
+        /// Convert values from measures form to MeasuresData structure.
+        /// </summary>
+        /// <returns>MeasuresData</returns>
         private MeasuresData fromFormToMeasures()
         {
             return new MeasuresData((int)height.Value, (int)circ_bust.Value, (int)circ_waist.Value,
@@ -220,9 +239,11 @@ namespace EasyPattern
                                                 (int)len_breast.Value, (int)len_hips.Value);
         }
 
+        /// <summary>
+        /// Call pattern drawing methods, shows resulting pdf.
+        /// </summary>
         private void doPattern_Click(object sender, EventArgs e)
         {
-           
             PatternControl control = new PatternControl(fromFormToMeasures(), drawNet.Checked);
 
             patternChoicePanel.Visible = false;
@@ -232,7 +253,6 @@ namespace EasyPattern
             folderBrowserDialog.ShowDialog();
             string path = folderBrowserDialog.SelectedPath;
             string viewPath = control.PdfPattern((PatternControl.Pattern)patternToDo.SelectedIndex, path);
-
 
             pdfViewer.Document = Patagames.Pdf.Net.PdfDocument.Load(viewPath);
         }
