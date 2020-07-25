@@ -261,6 +261,16 @@ namespace EasyPattern
         {
             Application.Exit();
         }
+
+        /// <summary>
+        /// Show help text.
+        /// </summary>
+        private void helpMeasures_Click(object sender, EventArgs e)
+        {
+            string message = @"Neměřte se sami, získali byste zkreslené výsledky, požádejte někoho o pomoc. Měřte se v prádle, které budete nosit pod oděv. Při měření stůjte rovně, ovšem uvolněně, postoj pro vás musí být přirozený. Měřicí pásek by měl jemně přiléhat na tělo, nesmí se zarývat a škrtit.";
+
+            MessageBox.Show(message);
+        }
     }
 
 }

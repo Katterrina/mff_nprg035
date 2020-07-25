@@ -99,6 +99,7 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
+            this.helpMeasures = new System.Windows.Forms.Button();
             this.welcome.SuspendLayout();
             this.measuresPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.len_hips)).BeginInit();
@@ -203,7 +204,9 @@
             // 
             // measuresPanel
             // 
+            this.measuresPanel.Controls.Add(this.helpMeasures);
             this.measuresPanel.Controls.Add(this.label27);
+            this.measuresPanel.Controls.Add(this.patternChoicePanel);
             this.measuresPanel.Controls.Add(this.label26);
             this.measuresPanel.Controls.Add(this.label25);
             this.measuresPanel.Controls.Add(this.label24);
@@ -510,10 +513,10 @@
             // 
             // save
             // 
-            this.save.Location = new System.Drawing.Point(108, 719);
+            this.save.Location = new System.Drawing.Point(105, 719);
             this.save.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(211, 28);
+            this.save.Size = new System.Drawing.Size(185, 28);
             this.save.TabIndex = 26;
             this.save.Text = "Uložit míry a pokračovat";
             this.save.UseVisualStyleBackColor = true;
@@ -521,10 +524,10 @@
             // 
             // next2
             // 
-            this.next2.Location = new System.Drawing.Point(327, 719);
+            this.next2.Location = new System.Drawing.Point(298, 719);
             this.next2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.next2.Name = "next2";
-            this.next2.Size = new System.Drawing.Size(212, 28);
+            this.next2.Size = new System.Drawing.Size(174, 28);
             this.next2.TabIndex = 25;
             this.next2.Text = "Pokračovat bez uložení";
             this.next2.UseVisualStyleBackColor = true;
@@ -532,10 +535,10 @@
             // 
             // toWelcome1
             // 
-            this.toWelcome1.Location = new System.Drawing.Point(0, 719);
+            this.toWelcome1.Location = new System.Drawing.Point(17, 719);
             this.toWelcome1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.toWelcome1.Name = "toWelcome1";
-            this.toWelcome1.Size = new System.Drawing.Size(100, 28);
+            this.toWelcome1.Size = new System.Drawing.Size(80, 28);
             this.toWelcome1.TabIndex = 24;
             this.toWelcome1.Text = "Zpět";
             this.toWelcome1.UseVisualStyleBackColor = true;
@@ -668,7 +671,7 @@
             this.patternChoicePanel.Controls.Add(this.doPattern);
             this.patternChoicePanel.Controls.Add(this.label15);
             this.patternChoicePanel.Controls.Add(this.patternToDo);
-            this.patternChoicePanel.Location = new System.Drawing.Point(15, 83);
+            this.patternChoicePanel.Location = new System.Drawing.Point(0, 0);
             this.patternChoicePanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.patternChoicePanel.Name = "patternChoicePanel";
             this.patternChoicePanel.Size = new System.Drawing.Size(1288, 652);
@@ -736,7 +739,7 @@
             this.viewerPanel.Controls.Add(this.pdfToolStripRotate1);
             this.viewerPanel.Controls.Add(this.pdfToolStripZoomEx);
             this.viewerPanel.Controls.Add(this.pdfViewer);
-            this.viewerPanel.Location = new System.Drawing.Point(11, 85);
+            this.viewerPanel.Location = new System.Drawing.Point(7, 82);
             this.viewerPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.viewerPanel.Name = "viewerPanel";
             this.viewerPanel.Size = new System.Drawing.Size(1292, 754);
@@ -968,6 +971,16 @@
             this.label27.TabIndex = 46;
             this.label27.Text = "v užším místě";
             // 
+            // helpMeasures
+            // 
+            this.helpMeasures.Location = new System.Drawing.Point(481, 719);
+            this.helpMeasures.Name = "helpMeasures";
+            this.helpMeasures.Size = new System.Drawing.Size(168, 28);
+            this.helpMeasures.TabIndex = 47;
+            this.helpMeasures.Text = "Nápověda k měření";
+            this.helpMeasures.UseVisualStyleBackColor = true;
+            this.helpMeasures.Click += new System.EventHandler(this.helpMeasures_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -975,7 +988,6 @@
             this.ClientSize = new System.Drawing.Size(1316, 846);
             this.Controls.Add(this.header);
             this.Controls.Add(this.viewerPanel);
-            this.Controls.Add(this.patternChoicePanel);
             this.Controls.Add(this.measuresPanel);
             this.Controls.Add(this.welcome);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -1083,6 +1095,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Button helpMeasures;
     }
 }
 
