@@ -2,8 +2,8 @@
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace EasyPattern
@@ -124,7 +124,7 @@ namespace EasyPattern
         /// <param name="pattern">enum Pattern option</param>
         /// <param name="path">string path to directory to save pdf with pattern</param>
         /// <returns>string path to resulting pdf</returns>
-        public string PdfPattern(Pattern pattern, string path)
+        public string DoPdfPattern(Pattern pattern, string path)
         {
             // filename is composited from pattern name and current date and time
             string filename = pattern.ToString() + "_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss") + ".pdf";
@@ -133,7 +133,7 @@ namespace EasyPattern
             // prepare pdf document
             PdfDocument pdfDoc = PdfControl.CreatePdfDocument(pattern.ToString());
 
-            
+
             IPatternDrawing patternObjectToDraw;
             // initialize what to draw according to the pattern option
             switch (pattern)
@@ -156,7 +156,7 @@ namespace EasyPattern
 
                 case Pattern.shirt:
                     patternObjectToDraw
-                        = new LooseShirt(visibleNet, pdfDoc, m.height, m.circ_bust, m.circ_waist, m.circ_hips,m.circ_neck,
+                        = new LooseShirt(visibleNet, pdfDoc, m.height, m.circ_bust, m.circ_waist, m.circ_hips, m.circ_neck,
                                          m.len_hips, m.len_back, m.wid_back, m.len_shoulder, m.len_breast);
                     break;
 
@@ -259,7 +259,7 @@ namespace EasyPattern
         public static void DrawScale(ref XGraphics graphics)
         {
             XPen p = XPens.Black;
-            graphics.DrawLine(p, new XPoint(30,30), new XPoint(130,30));
+            graphics.DrawLine(p, new XPoint(30, 30), new XPoint(130, 30));
 
             for (int i = 30; i <= 130; i += 10)
             {
@@ -283,7 +283,7 @@ namespace EasyPattern
         /// <returns>int perimetr of the circle</returns>
         public static int Perimetr(int circumference)
         {
-            return (int)(circumference / (2* Math.PI));
+            return (int)(circumference / (2 * Math.PI));
         }
 
         /// <summary>
@@ -522,12 +522,12 @@ namespace EasyPattern
             // calculate position of chest line - chreates back point of chest line
             if (lenFrontArmpit < lenBackArmpit + 30) { chest.Add("back", PGeometry.PointInRelativePositionVertical(start, lenBackArmpit + 30)); }
             else { chest.Add("back", PGeometry.PointInRelativePositionVertical(start, lenFrontArmpit)); }
-            
+
             // add points to chest line
             chest.Add("armholeBack", PGeometry.PointInRelativePositionHorizontal(chest["back"], widBack));
             chest.Add("centerBack", PGeometry.PointInRelativePositionHorizontal(chest["armholeBack"], 2 * widArmhole / 3));
             chest.Add("armholeFront", PGeometry.PointInRelativePositionHorizontal(chest["armholeBack"], widArmhole + patternGap));
-            chest.Add("centerFront", PGeometry.PointInRelativePositionHorizontal(chest["armholeFront"], - widArmhole / 3));
+            chest.Add("centerFront", PGeometry.PointInRelativePositionHorizontal(chest["armholeFront"], -widArmhole / 3));
             chest.Add("front", PGeometry.PointInRelativePositionHorizontal(chest["armholeFront"], widFront));
 
             // shift back chest points up - back help line for neck part of pattern
@@ -608,7 +608,7 @@ namespace EasyPattern
             int d2 = (int)(2 * (frontDown.X - centerDown.X) / 3);
             XPoint h2 = PGeometry.PointInRelativePositionHorizontal(frontDown, -d2);
 
-            gfx.DrawLines(pen, new XPoint[] { start, backBreak, backHips, backDown, h1, centerDown, h2, frontDown, end});
+            gfx.DrawLines(pen, new XPoint[] { start, backBreak, backHips, backDown, h1, centerDown, h2, frontDown, end });
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace EasyPattern
             double distX = shoulder.X - backArmhole.X < 30 ? 30 : shoulder.X - backArmhole.X;
             double distY = backArmhole.Y - shoulder.Y;
             XPoint a = PGeometry.PointInRelativePosition(shoulder, (int)(-2 * distX / 3), (int)(distY / 2));
-            XPoint b = PGeometry.PointInRelativePosition(shoulder, (int)(- distX / 3), (int)(4 * distY / 5));
+            XPoint b = PGeometry.PointInRelativePosition(shoulder, (int)(-distX / 3), (int)(4 * distY / 5));
 
             return new OrientedAbscissa(a, b);
         }
@@ -741,7 +741,7 @@ namespace EasyPattern
         {
             double width = upperRightNet.X - frontShoulder.X;
             XPoint upperLeft = PGeometry.PointInRelativePositionVertical(frontShoulder, -height);
-            XPoint downRight = PGeometry.PointInRelativePosition(frontShoulder, (int)(2 * width),height);
+            XPoint downRight = PGeometry.PointInRelativePosition(frontShoulder, (int)(2 * width), height);
             gfx.DrawArc(pen, new XRect(upperLeft, downRight), 90, 90);
         }
 
@@ -764,7 +764,7 @@ namespace EasyPattern
         public LooseShirt(bool visibleNet, PdfDocument pdfDoc, int height, int circChest, int circWaist, int circHips, int circNeck, int lenHips, int lenBack, int widthBack, int lenShoulder, int depthBreastPoint)
             : base(visibleNet, pdfDoc, height, circChest, circWaist, circHips, circNeck, lenHips, lenBack, widthBack, lenShoulder)
         {
-            
+
             int frontNeckUpAddition = widthChest / 10;
 
             // chestAddition depends on chest circumference
@@ -776,7 +776,7 @@ namespace EasyPattern
 
             // divide addition in all parts of pattern
             widBack = this.widthBack + 3 * chestAddition / 13;
-            lenShoulderWithAddition = Math.Min(this.lenShoulder + 3 * chestAddition / 13,160);
+            lenShoulderWithAddition = Math.Min(this.lenShoulder + 3 * chestAddition / 13, 160);
             widArmhole = widthChest / 4 - 15 + 6 * chestAddition / 13;
             widFront = widthChest / 2 - 40 + 4 * chestAddition / 13;
 
@@ -865,7 +865,7 @@ namespace EasyPattern
         /// </summary>
         public void DrawPattern()
         {
-            Dictionary<string, Dictionary<string, XPoint>> net 
+            Dictionary<string, Dictionary<string, XPoint>> net
                 = PrepareBodiceNet(PdfControl.start, lenBack, lenHips, lenBackArmpit, lenFront, lenBack + lenHips, widBack, widArmhole, widFront, 0);
             if (visibleNet) { DrawBodiceNet(gfx, dashedPen, net); }
 
@@ -877,7 +877,7 @@ namespace EasyPattern
             OrientedAbscissa backShoulder = BackShoulderLine(net["neck"]["back"], net["neck"]["armholeBack"], lenShoulderWithAddition, widthNeck, shoulderSlope);
 
             OrientedAbscissa frontShoulder = FrontShoulder(net["neck"]["front"], net["chest"]["armholeFront"], widthNeck + 10, lenShoulderWithAddition, armholeHeight);
-            
+
             OrientedAbscissa backArmholeHelpPoints = FindBackArmholeHelpPoints(backShoulder.end, net["chest"]["armholeBack"]);
             OrientedAbscissa frontArmholeHelpPoints = findFrontArmohleHelpPoints(frontShoulder.start, net["chest"]["armholeFront"]);
 
@@ -948,7 +948,7 @@ namespace EasyPattern
             this.patternGap = widthHips - widthChest + (widFront - widthWaist / 2) / 2;
 
             lenBackArmpit = height / 10 + widthChest / 10 + 3;
-            
+
             gfx = CreatePdfGraphics(lenFront + lenHips, widthChestWithAddition, pdfDoc);
         }
 
@@ -1111,7 +1111,7 @@ namespace EasyPattern
             int lenTorso = lenBack - lenBackArmpit;
             XPoint backTuck1 = PGeometry.PointInRelativePositionVertical(net["waist"]["armholeBack"], -5);
             DrawTuck(gfx, pen, backTuck1, tuckBackWidth, 0, 3 * lenTorso / 4, 3 * lenHips / 4);
-            XPoint backTuck2 = PGeometry.PointInRelativePositionHorizontal(net["waist"]["armholeBack"], -widthBack/2);
+            XPoint backTuck2 = PGeometry.PointInRelativePositionHorizontal(net["waist"]["armholeBack"], -widthBack / 2);
             DrawTuck(gfx, pen, backTuck2, tuckBackWidth, 0, 2 * lenTorso / 3, 2 * lenHips / 3);
 
             // back saddle
@@ -1134,7 +1134,7 @@ namespace EasyPattern
             lenPattern = lenKnee + lenBack;
             this.patternGap = widthHips - widthChest + (widFront - widthWaist / 2) / 2 + 2 * downAddition;
 
-            pdfDoc.Pages.RemoveAt(pdfDoc.Pages.Count-1); // because the blouse contructor creates its own page
+            pdfDoc.Pages.RemoveAt(pdfDoc.Pages.Count - 1); // because the blouse contructor creates its own page
             gfx = CreatePdfGraphics(lenPattern, widthChestWithAddition, pdfDoc);
         }
 
@@ -1492,7 +1492,7 @@ namespace EasyPattern
             OrientedAbscissa backTuck2Line = upTuckLine(backTuck2Width, upBackTuck2, centerUpBack, net["back"]["waist"]);
 
             // down tuck
-            XPoint downTuckBack = PGeometry.PointInRelativePositionHorizontal(net["centerBack"]["down"],- downTuckHalf);
+            XPoint downTuckBack = PGeometry.PointInRelativePositionHorizontal(net["centerBack"]["down"], -downTuckHalf);
             XPoint downTuckFront = PGeometry.PointInRelativePositionHorizontal(net["centerBack"]["down"], downTuckHalf);
 
             // ------------------- draw ------------------------

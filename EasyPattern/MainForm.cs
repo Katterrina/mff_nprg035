@@ -10,7 +10,7 @@ namespace EasyPattern
     public partial class MainForm : Form
     {
         public readonly string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;
-                                             AttachDbFilename=C:\Users\Katerina\Desktop\C#_zapoctak\EasyPattern\EasyPattern\MeasursDatabase.mdf;
+                                             AttachDbFilename=|DataDirectory|\MeasursDatabase.mdf;
                                              Integrated Security=True";
         public MainForm()
         {
@@ -32,7 +32,7 @@ namespace EasyPattern
                                          .Select
                                          (value => new
                                          {
-                                            (Attribute.GetCustomAttribute(
+                                             (Attribute.GetCustomAttribute(
                                                 value.GetType().GetField(value.ToString()),
                                                 typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
                                              value
@@ -79,7 +79,7 @@ namespace EasyPattern
         {
             if (updateMeasures.Checked)
             {
-                welcome.Visible = false;
+                welcomePanel.Visible = false;
                 measuresPanel.Visible = true;
                 nameAndNoteMeasures.Visible = false;
 
@@ -102,12 +102,12 @@ namespace EasyPattern
                 else
                 {
                     PrefillForm(selected);
-                    welcome.Visible = false;
+                    welcomePanel.Visible = false;
                     patternChoicePanel.Visible = true;
                 }
-                    
+
             }
-            
+
         }
 
         /// <summary>
@@ -166,8 +166,9 @@ namespace EasyPattern
                 string name = popup.nameOfMSet.Text;
                 string note = popup.note.Text;
 
-                next2_Click(sender, e);
-                InsertDataSetToDatabase(name, note, fromFormToMeasures());
+                
+                if (InsertDataSetToDatabase(name, note, fromFormToMeasures()))
+                { next2_Click(sender, e); }
             }
 
             else
@@ -185,7 +186,7 @@ namespace EasyPattern
         /// <param name="name">name of data set</param>
         /// <param name="note">note to data set</param>
         /// <param name="m">MeasuresData data</param>
-        private void InsertDataSetToDatabase(string name, string note, MeasuresData m)
+        private bool InsertDataSetToDatabase(string name, string note, MeasuresData m)
         {
             string sql = $"INSERT INTO MeasuresSets " +
                 $"(name, note, height, circ_bust, circ_waist, circ_hips, len_back, wid_back, len_knee, " +
@@ -200,15 +201,23 @@ namespace EasyPattern
 
                 using (SqlCommand cmd = new SqlCommand(sql, con))
                 {
-                    cmd.ExecuteNonQuery();
+                    try { cmd.ExecuteNonQuery(); }
+                    catch
+                    {
+                        string message = @"Něco se nepovedlo, zkuste to znovu. Možná tento název již v databázi existuje, zkuste sadu uložit pod jiným jménem.";
+                        MessageBox.Show(message);
+                        return false;
+                    }
                 }
             }
+
+            return true;
         }
 
         private void toWelcome1_Click(object sender, EventArgs e)
         {
             measuresPanel.Visible = false;
-            welcome.Visible = true;
+            welcomePanel.Visible = true;
             patternChoicePanel.Visible = false;
             viewerPanel.Visible = false;
             loadMeasureChoice();
@@ -244,16 +253,27 @@ namespace EasyPattern
         /// </summary>
         private void doPattern_Click(object sender, EventArgs e)
         {
-            PatternControl control = new PatternControl(fromFormToMeasures(), drawNet.Checked);
-
             patternChoicePanel.Visible = false;
             measuresPanel.Visible = false;
             viewerPanel.Visible = true;
 
+            // get measures data from measures form
+            MeasuresData m = fromFormToMeasures();
+
+            // initialize pattern control
+            PatternControl control = new PatternControl(m, drawNet.Checked);
+
+            // choose where to save pdf pattern
             folderBrowserDialog.ShowDialog();
             string path = folderBrowserDialog.SelectedPath;
-            string viewPath = control.PdfPattern((PatternControl.Pattern)patternToDo.SelectedIndex, path);
 
+            // get choosed pattern
+            PatternControl.Pattern pattern = (PatternControl.Pattern)patternToDo.SelectedIndex;
+
+            // create pdf with pattern, return path to result
+            string viewPath = control.DoPdfPattern(pattern, path);
+
+            // view pdf with pattern
             pdfViewer.Document = Patagames.Pdf.Net.PdfDocument.Load(viewPath);
         }
 
@@ -267,7 +287,7 @@ namespace EasyPattern
         /// </summary>
         private void helpMeasures_Click(object sender, EventArgs e)
         {
-            string message = @"Neměřte se sami, získali byste zkreslené výsledky, požádejte někoho o pomoc. Měřte se v prádle, které budete nosit pod oděv. Při měření stůjte rovně, ovšem uvolněně, postoj pro vás musí být přirozený. Měřicí pásek by měl jemně přiléhat na tělo, nesmí se zarývat a škrtit.";
+            string message = @"Neměřte se sami, získali byste zkreslené výsledky, raději požádejte někoho o pomoc. Měřte se v prádle, které budete pod výsledný oděv nosit. Při měření stůjte rovně, ovšem uvolněně, postoj pro vás musí být přirozený. Měřicí pásek by měl jemně přiléhat na tělo, nesmí se zarývat a škrtit.";
 
             MessageBox.Show(message);
         }

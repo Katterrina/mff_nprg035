@@ -34,9 +34,28 @@
             this.welcomeText = new System.Windows.Forms.Label();
             this.updateMeasures = new System.Windows.Forms.RadioButton();
             this.noUpdate = new System.Windows.Forms.RadioButton();
-            this.welcome = new System.Windows.Forms.Panel();
+            this.welcomePanel = new System.Windows.Forms.Panel();
             this.next1 = new System.Windows.Forms.Button();
             this.measuresPanel = new System.Windows.Forms.Panel();
+            this.helpMeasures = new System.Windows.Forms.Button();
+            this.label27 = new System.Windows.Forms.Label();
+            this.patternChoicePanel = new System.Windows.Forms.Panel();
+            this.drawNet = new System.Windows.Forms.CheckBox();
+            this.toWelcome2 = new System.Windows.Forms.Button();
+            this.doPattern = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.patternToDo = new System.Windows.Forms.ComboBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.len_hips = new System.Windows.Forms.NumericUpDown();
             this.label16 = new System.Windows.Forms.Label();
             this.len_knee = new System.Windows.Forms.NumericUpDown();
@@ -73,12 +92,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.patternChoicePanel = new System.Windows.Forms.Panel();
-            this.drawNet = new System.Windows.Forms.CheckBox();
-            this.toWelcome2 = new System.Windows.Forms.Button();
-            this.doPattern = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.patternToDo = new System.Windows.Forms.ComboBox();
             this.viewerPanel = new System.Windows.Forms.Panel();
             this.end = new System.Windows.Forms.Button();
             this.toWelcome3 = new System.Windows.Forms.Button();
@@ -87,21 +100,10 @@
             this.pdfViewer = new Patagames.Pdf.Net.Controls.WinForms.PdfViewer();
             this.pdfToolStripZoomEx = new Patagames.Pdf.Net.Controls.WinForms.ToolBars.PdfToolStripZoomEx();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.helpMeasures = new System.Windows.Forms.Button();
-            this.welcome.SuspendLayout();
+            this.welcomePanel.SuspendLayout();
             this.measuresPanel.SuspendLayout();
+            this.patternChoicePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.len_hips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.len_knee)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).BeginInit();
@@ -117,16 +119,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.circ_bust)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.height)).BeginInit();
             this.nameAndNoteMeasures.SuspendLayout();
-            this.patternChoicePanel.SuspendLayout();
             this.viewerPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // choiceMeasuresSet
             // 
             this.choiceMeasuresSet.FormattingEnabled = true;
             this.choiceMeasuresSet.Location = new System.Drawing.Point(541, 238);
-            this.choiceMeasuresSet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.choiceMeasuresSet.Margin = new System.Windows.Forms.Padding(4);
             this.choiceMeasuresSet.Name = "choiceMeasuresSet";
             this.choiceMeasuresSet.Size = new System.Drawing.Size(160, 24);
             this.choiceMeasuresSet.TabIndex = 2;
@@ -158,7 +158,7 @@
             this.updateMeasures.AutoSize = true;
             this.updateMeasures.Checked = true;
             this.updateMeasures.Location = new System.Drawing.Point(541, 271);
-            this.updateMeasures.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.updateMeasures.Margin = new System.Windows.Forms.Padding(4);
             this.updateMeasures.Name = "updateMeasures";
             this.updateMeasures.Size = new System.Drawing.Size(165, 21);
             this.updateMeasures.TabIndex = 4;
@@ -170,7 +170,7 @@
             // 
             this.noUpdate.AutoSize = true;
             this.noUpdate.Location = new System.Drawing.Point(523, 299);
-            this.noUpdate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.noUpdate.Margin = new System.Windows.Forms.Padding(4);
             this.noUpdate.Name = "noUpdate";
             this.noUpdate.Size = new System.Drawing.Size(205, 21);
             this.noUpdate.TabIndex = 5;
@@ -180,21 +180,21 @@
             // 
             // welcome
             // 
-            this.welcome.Controls.Add(this.next1);
-            this.welcome.Controls.Add(this.noUpdate);
-            this.welcome.Controls.Add(this.updateMeasures);
-            this.welcome.Controls.Add(this.choiceMeasuresSet);
-            this.welcome.Controls.Add(this.welcomeText);
-            this.welcome.Location = new System.Drawing.Point(11, 83);
-            this.welcome.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.welcome.Name = "welcome";
-            this.welcome.Size = new System.Drawing.Size(1284, 767);
-            this.welcome.TabIndex = 6;
+            this.welcomePanel.Controls.Add(this.next1);
+            this.welcomePanel.Controls.Add(this.noUpdate);
+            this.welcomePanel.Controls.Add(this.updateMeasures);
+            this.welcomePanel.Controls.Add(this.choiceMeasuresSet);
+            this.welcomePanel.Controls.Add(this.welcomeText);
+            this.welcomePanel.Location = new System.Drawing.Point(11, 83);
+            this.welcomePanel.Margin = new System.Windows.Forms.Padding(4);
+            this.welcomePanel.Name = "welcome";
+            this.welcomePanel.Size = new System.Drawing.Size(1284, 767);
+            this.welcomePanel.TabIndex = 6;
             // 
             // next1
             // 
             this.next1.Location = new System.Drawing.Point(582, 328);
-            this.next1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.next1.Margin = new System.Windows.Forms.Padding(4);
             this.next1.Name = "next1";
             this.next1.Size = new System.Drawing.Size(100, 28);
             this.next1.TabIndex = 6;
@@ -206,7 +206,6 @@
             // 
             this.measuresPanel.Controls.Add(this.helpMeasures);
             this.measuresPanel.Controls.Add(this.label27);
-            this.measuresPanel.Controls.Add(this.patternChoicePanel);
             this.measuresPanel.Controls.Add(this.label26);
             this.measuresPanel.Controls.Add(this.label25);
             this.measuresPanel.Controls.Add(this.label24);
@@ -251,16 +250,213 @@
             this.measuresPanel.Controls.Add(this.label3);
             this.measuresPanel.Controls.Add(this.label2);
             this.measuresPanel.Controls.Add(this.label1);
-            this.measuresPanel.Location = new System.Drawing.Point(11, 83);
-            this.measuresPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.measuresPanel.Location = new System.Drawing.Point(11, 82);
+            this.measuresPanel.Margin = new System.Windows.Forms.Padding(4);
             this.measuresPanel.Name = "measuresPanel";
             this.measuresPanel.Size = new System.Drawing.Size(1284, 747);
             this.measuresPanel.TabIndex = 7;
             // 
+            // helpMeasures
+            // 
+            this.helpMeasures.Location = new System.Drawing.Point(481, 719);
+            this.helpMeasures.Name = "helpMeasures";
+            this.helpMeasures.Size = new System.Drawing.Size(168, 28);
+            this.helpMeasures.TabIndex = 47;
+            this.helpMeasures.Text = "Nápověda k měření";
+            this.helpMeasures.UseVisualStyleBackColor = true;
+            this.helpMeasures.Click += new System.EventHandler(this.helpMeasures_Click);
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(327, 224);
+            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(92, 17);
+            this.label27.TabIndex = 46;
+            this.label27.Text = "v užším místě";
+            // 
+            // patternChoicePanel
+            // 
+            this.patternChoicePanel.Controls.Add(this.drawNet);
+            this.patternChoicePanel.Controls.Add(this.toWelcome2);
+            this.patternChoicePanel.Controls.Add(this.doPattern);
+            this.patternChoicePanel.Controls.Add(this.label15);
+            this.patternChoicePanel.Controls.Add(this.patternToDo);
+            this.patternChoicePanel.Location = new System.Drawing.Point(11, 82);
+            this.patternChoicePanel.Margin = new System.Windows.Forms.Padding(4);
+            this.patternChoicePanel.Name = "patternChoicePanel";
+            this.patternChoicePanel.Size = new System.Drawing.Size(1288, 652);
+            this.patternChoicePanel.TabIndex = 8;
+            // 
+            // drawNet
+            // 
+            this.drawNet.AutoSize = true;
+            this.drawNet.Checked = true;
+            this.drawNet.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.drawNet.Location = new System.Drawing.Point(467, 274);
+            this.drawNet.Margin = new System.Windows.Forms.Padding(4);
+            this.drawNet.Name = "drawNet";
+            this.drawNet.Size = new System.Drawing.Size(260, 21);
+            this.drawNet.TabIndex = 8;
+            this.drawNet.Text = "vykreslit střih včetně konstrukční sítě";
+            this.drawNet.UseVisualStyleBackColor = true;
+            // 
+            // toWelcome2
+            // 
+            this.toWelcome2.Location = new System.Drawing.Point(511, 341);
+            this.toWelcome2.Margin = new System.Windows.Forms.Padding(4);
+            this.toWelcome2.Name = "toWelcome2";
+            this.toWelcome2.Size = new System.Drawing.Size(173, 28);
+            this.toWelcome2.TabIndex = 3;
+            this.toWelcome2.Text = "Zpět na začátek";
+            this.toWelcome2.UseVisualStyleBackColor = true;
+            this.toWelcome2.Click += new System.EventHandler(this.toWelcome1_Click);
+            // 
+            // doPattern
+            // 
+            this.doPattern.Location = new System.Drawing.Point(492, 303);
+            this.doPattern.Margin = new System.Windows.Forms.Padding(4);
+            this.doPattern.Name = "doPattern";
+            this.doPattern.Size = new System.Drawing.Size(211, 28);
+            this.doPattern.TabIndex = 2;
+            this.doPattern.Text = "Vygenerovat střih";
+            this.doPattern.UseVisualStyleBackColor = true;
+            this.doPattern.Click += new System.EventHandler(this.doPattern_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(551, 204);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(92, 17);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Vyberte střih:";
+            // 
+            // patternToDo
+            // 
+            this.patternToDo.FormattingEnabled = true;
+            this.patternToDo.Location = new System.Drawing.Point(511, 234);
+            this.patternToDo.Margin = new System.Windows.Forms.Padding(4);
+            this.patternToDo.Name = "patternToDo";
+            this.patternToDo.Size = new System.Drawing.Size(173, 24);
+            this.patternToDo.TabIndex = 0;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(324, 413);
+            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(177, 17);
+            this.label26.TabIndex = 45;
+            this.label26.Text = "od krku k ramennímu hrotu";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(324, 381);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(177, 17);
+            this.label25.TabIndex = 44;
+            this.label25.Text = "od krku k ramennímu hrotu";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(327, 349);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(292, 17);
+            this.label24.TabIndex = 43;
+            this.label24.Text = "měřte s připaženýma rukama mezi podpažími";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(327, 317);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(247, 17);
+            this.label23.TabIndex = 42;
+            this.label23.Text = "od výrazného krčního obratle do pasu";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(324, 507);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(82, 17);
+            this.label22.TabIndex = 41;
+            this.label22.Text = "v dolní části";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(324, 477);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(170, 17);
+            this.label21.TabIndex = 40;
+            this.label21.Text = "od ramene na vrchol prsu";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(324, 443);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(237, 17);
+            this.label20.TabIndex = 39;
+            this.label20.Text = "od ramene přes vrchol prsu do pasu";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(327, 285);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(238, 17);
+            this.label19.TabIndex = 38;
+            this.label19.Text = "měřte na boku mezi linií pasu a sedu";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(324, 256);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(148, 17);
+            this.label18.TabIndex = 37;
+            this.label18.Text = "v nejširšim místě hýždí";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(327, 192);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(151, 17);
+            this.label17.TabIndex = 36;
+            this.label17.Text = "v nejširšim místě prsou";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(676, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(592, 741);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 35;
+            this.pictureBox1.TabStop = false;
+            // 
             // len_hips
             // 
             this.len_hips.Location = new System.Drawing.Point(186, 283);
-            this.len_hips.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_hips.Margin = new System.Windows.Forms.Padding(4);
             this.len_hips.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -283,7 +479,7 @@
             // len_knee
             // 
             this.len_knee.Location = new System.Drawing.Point(186, 571);
-            this.len_knee.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_knee.Margin = new System.Windows.Forms.Padding(4);
             this.len_knee.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -306,7 +502,7 @@
             // circ_sleeve
             // 
             this.circ_sleeve.Location = new System.Drawing.Point(186, 539);
-            this.circ_sleeve.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.circ_sleeve.Margin = new System.Windows.Forms.Padding(4);
             this.circ_sleeve.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -319,7 +515,7 @@
             // circ_neck
             // 
             this.circ_neck.Location = new System.Drawing.Point(186, 507);
-            this.circ_neck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.circ_neck.Margin = new System.Windows.Forms.Padding(4);
             this.circ_neck.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -332,7 +528,7 @@
             // len_breast
             // 
             this.len_breast.Location = new System.Drawing.Point(186, 475);
-            this.len_breast.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_breast.Margin = new System.Windows.Forms.Padding(4);
             this.len_breast.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -345,7 +541,7 @@
             // len_front
             // 
             this.len_front.Location = new System.Drawing.Point(186, 443);
-            this.len_front.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_front.Margin = new System.Windows.Forms.Padding(4);
             this.len_front.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -358,7 +554,7 @@
             // len_sleeve
             // 
             this.len_sleeve.Location = new System.Drawing.Point(186, 411);
-            this.len_sleeve.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_sleeve.Margin = new System.Windows.Forms.Padding(4);
             this.len_sleeve.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -371,7 +567,7 @@
             // len_shoulder
             // 
             this.len_shoulder.Location = new System.Drawing.Point(186, 379);
-            this.len_shoulder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_shoulder.Margin = new System.Windows.Forms.Padding(4);
             this.len_shoulder.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -384,7 +580,7 @@
             // wid_back
             // 
             this.wid_back.Location = new System.Drawing.Point(186, 347);
-            this.wid_back.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.wid_back.Margin = new System.Windows.Forms.Padding(4);
             this.wid_back.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -397,7 +593,7 @@
             // len_back
             // 
             this.len_back.Location = new System.Drawing.Point(186, 315);
-            this.len_back.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.len_back.Margin = new System.Windows.Forms.Padding(4);
             this.len_back.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -410,7 +606,7 @@
             // circ_hips
             // 
             this.circ_hips.Location = new System.Drawing.Point(186, 254);
-            this.circ_hips.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.circ_hips.Margin = new System.Windows.Forms.Padding(4);
             this.circ_hips.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -423,7 +619,7 @@
             // circ_waist
             // 
             this.circ_waist.Location = new System.Drawing.Point(186, 222);
-            this.circ_waist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.circ_waist.Margin = new System.Windows.Forms.Padding(4);
             this.circ_waist.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -436,7 +632,7 @@
             // circ_bust
             // 
             this.circ_bust.Location = new System.Drawing.Point(186, 190);
-            this.circ_bust.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.circ_bust.Margin = new System.Windows.Forms.Padding(4);
             this.circ_bust.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -449,7 +645,7 @@
             // height
             // 
             this.height.Location = new System.Drawing.Point(186, 158);
-            this.height.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.height.Margin = new System.Windows.Forms.Padding(4);
             this.height.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -465,7 +661,7 @@
             this.nameAndNoteMeasures.Controls.Add(this.label14);
             this.nameAndNoteMeasures.Controls.Add(this.nameOfDataSet);
             this.nameAndNoteMeasures.Location = new System.Drawing.Point(4, 21);
-            this.nameAndNoteMeasures.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nameAndNoteMeasures.Margin = new System.Windows.Forms.Padding(4);
             this.nameAndNoteMeasures.Name = "nameAndNoteMeasures";
             this.nameAndNoteMeasures.Size = new System.Drawing.Size(483, 122);
             this.nameAndNoteMeasures.TabIndex = 30;
@@ -514,7 +710,7 @@
             // save
             // 
             this.save.Location = new System.Drawing.Point(105, 719);
-            this.save.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.save.Margin = new System.Windows.Forms.Padding(4);
             this.save.Name = "save";
             this.save.Size = new System.Drawing.Size(185, 28);
             this.save.TabIndex = 26;
@@ -525,7 +721,7 @@
             // next2
             // 
             this.next2.Location = new System.Drawing.Point(298, 719);
-            this.next2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.next2.Margin = new System.Windows.Forms.Padding(4);
             this.next2.Name = "next2";
             this.next2.Size = new System.Drawing.Size(174, 28);
             this.next2.TabIndex = 25;
@@ -536,7 +732,7 @@
             // toWelcome1
             // 
             this.toWelcome1.Location = new System.Drawing.Point(17, 719);
-            this.toWelcome1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.toWelcome1.Margin = new System.Windows.Forms.Padding(4);
             this.toWelcome1.Name = "toWelcome1";
             this.toWelcome1.Size = new System.Drawing.Size(80, 28);
             this.toWelcome1.TabIndex = 24;
@@ -664,73 +860,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Výška postavy";
             // 
-            // patternChoicePanel
-            // 
-            this.patternChoicePanel.Controls.Add(this.drawNet);
-            this.patternChoicePanel.Controls.Add(this.toWelcome2);
-            this.patternChoicePanel.Controls.Add(this.doPattern);
-            this.patternChoicePanel.Controls.Add(this.label15);
-            this.patternChoicePanel.Controls.Add(this.patternToDo);
-            this.patternChoicePanel.Location = new System.Drawing.Point(0, 0);
-            this.patternChoicePanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.patternChoicePanel.Name = "patternChoicePanel";
-            this.patternChoicePanel.Size = new System.Drawing.Size(1288, 652);
-            this.patternChoicePanel.TabIndex = 8;
-            // 
-            // drawNet
-            // 
-            this.drawNet.AutoSize = true;
-            this.drawNet.Checked = true;
-            this.drawNet.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.drawNet.Location = new System.Drawing.Point(467, 274);
-            this.drawNet.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.drawNet.Name = "drawNet";
-            this.drawNet.Size = new System.Drawing.Size(260, 21);
-            this.drawNet.TabIndex = 8;
-            this.drawNet.Text = "vykreslit střih včetně konstrukční sítě";
-            this.drawNet.UseVisualStyleBackColor = true;
-            // 
-            // toWelcome2
-            // 
-            this.toWelcome2.Location = new System.Drawing.Point(511, 341);
-            this.toWelcome2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.toWelcome2.Name = "toWelcome2";
-            this.toWelcome2.Size = new System.Drawing.Size(173, 28);
-            this.toWelcome2.TabIndex = 3;
-            this.toWelcome2.Text = "Zpět na začátek";
-            this.toWelcome2.UseVisualStyleBackColor = true;
-            this.toWelcome2.Click += new System.EventHandler(this.toWelcome1_Click);
-            // 
-            // doPattern
-            // 
-            this.doPattern.Location = new System.Drawing.Point(492, 303);
-            this.doPattern.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.doPattern.Name = "doPattern";
-            this.doPattern.Size = new System.Drawing.Size(211, 28);
-            this.doPattern.TabIndex = 2;
-            this.doPattern.Text = "Vygenerovat střih";
-            this.doPattern.UseVisualStyleBackColor = true;
-            this.doPattern.Click += new System.EventHandler(this.doPattern_Click);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(551, 204);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(92, 17);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Vyberte střih:";
-            // 
-            // patternToDo
-            // 
-            this.patternToDo.FormattingEnabled = true;
-            this.patternToDo.Location = new System.Drawing.Point(511, 234);
-            this.patternToDo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.patternToDo.Name = "patternToDo";
-            this.patternToDo.Size = new System.Drawing.Size(173, 24);
-            this.patternToDo.TabIndex = 0;
-            // 
             // viewerPanel
             // 
             this.viewerPanel.Controls.Add(this.end);
@@ -739,16 +868,16 @@
             this.viewerPanel.Controls.Add(this.pdfToolStripRotate1);
             this.viewerPanel.Controls.Add(this.pdfToolStripZoomEx);
             this.viewerPanel.Controls.Add(this.pdfViewer);
-            this.viewerPanel.Location = new System.Drawing.Point(7, 82);
-            this.viewerPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.viewerPanel.Location = new System.Drawing.Point(1, 79);
+            this.viewerPanel.Margin = new System.Windows.Forms.Padding(4);
             this.viewerPanel.Name = "viewerPanel";
-            this.viewerPanel.Size = new System.Drawing.Size(1292, 754);
+            this.viewerPanel.Size = new System.Drawing.Size(1312, 754);
             this.viewerPanel.TabIndex = 9;
             // 
             // end
             // 
             this.end.Location = new System.Drawing.Point(4, 718);
-            this.end.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.end.Margin = new System.Windows.Forms.Padding(4);
             this.end.Name = "end";
             this.end.Size = new System.Drawing.Size(168, 28);
             this.end.TabIndex = 4;
@@ -759,7 +888,7 @@
             // toWelcome3
             // 
             this.toWelcome3.Location = new System.Drawing.Point(4, 682);
-            this.toWelcome3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.toWelcome3.Margin = new System.Windows.Forms.Padding(4);
             this.toWelcome3.Name = "toWelcome3";
             this.toWelcome3.Size = new System.Drawing.Size(168, 28);
             this.toWelcome3.TabIndex = 1;
@@ -770,7 +899,7 @@
             // backToPatternChoice
             // 
             this.backToPatternChoice.Location = new System.Drawing.Point(4, 647);
-            this.backToPatternChoice.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.backToPatternChoice.Margin = new System.Windows.Forms.Padding(4);
             this.backToPatternChoice.Name = "backToPatternChoice";
             this.backToPatternChoice.Size = new System.Drawing.Size(168, 28);
             this.backToPatternChoice.TabIndex = 0;
@@ -799,7 +928,7 @@
             this.pdfViewer.FormsBlendMode = Patagames.Pdf.Enums.BlendTypes.FXDIB_BLEND_MULTIPLY;
             this.pdfViewer.LoadingIconText = "Loading...";
             this.pdfViewer.Location = new System.Drawing.Point(181, 4);
-            this.pdfViewer.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.pdfViewer.Margin = new System.Windows.Forms.Padding(5);
             this.pdfViewer.MouseMode = Patagames.Pdf.Net.Controls.WinForms.MouseModes.Default;
             this.pdfViewer.Name = "pdfViewer";
             this.pdfViewer.OptimizedLoadThreshold = 1000;
@@ -851,152 +980,26 @@
         600F,
         800F};
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(676, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(592, 741);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 35;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(327, 192);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(151, 17);
-            this.label17.TabIndex = 36;
-            this.label17.Text = "v nejširšim místě prsou";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(324, 256);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(148, 17);
-            this.label18.TabIndex = 37;
-            this.label18.Text = "v nejširšim místě hýždí";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(327, 285);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(238, 17);
-            this.label19.TabIndex = 38;
-            this.label19.Text = "měřte na boku mezi linií pasu a sedu";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(324, 443);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(237, 17);
-            this.label20.TabIndex = 39;
-            this.label20.Text = "od ramene přes vrchol prsu do pasu";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(324, 477);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(170, 17);
-            this.label21.TabIndex = 40;
-            this.label21.Text = "od ramene na vrchol prsu";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(324, 507);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(82, 17);
-            this.label22.TabIndex = 41;
-            this.label22.Text = "v dolní části";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(327, 317);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(247, 17);
-            this.label23.TabIndex = 42;
-            this.label23.Text = "od výrazného krčního obratle do pasu";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(327, 349);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(292, 17);
-            this.label24.TabIndex = 43;
-            this.label24.Text = "měřte s připaženýma rukama mezi podpažími";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(324, 381);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(177, 17);
-            this.label25.TabIndex = 44;
-            this.label25.Text = "od krku k ramennímu hrotu";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(324, 413);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(177, 17);
-            this.label26.TabIndex = 45;
-            this.label26.Text = "od krku k ramennímu hrotu";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(327, 224);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(92, 17);
-            this.label27.TabIndex = 46;
-            this.label27.Text = "v užším místě";
-            // 
-            // helpMeasures
-            // 
-            this.helpMeasures.Location = new System.Drawing.Point(481, 719);
-            this.helpMeasures.Name = "helpMeasures";
-            this.helpMeasures.Size = new System.Drawing.Size(168, 28);
-            this.helpMeasures.TabIndex = 47;
-            this.helpMeasures.Text = "Nápověda k měření";
-            this.helpMeasures.UseVisualStyleBackColor = true;
-            this.helpMeasures.Click += new System.EventHandler(this.helpMeasures_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1316, 846);
-            this.Controls.Add(this.header);
             this.Controls.Add(this.viewerPanel);
+            this.Controls.Add(this.patternChoicePanel);
+            this.Controls.Add(this.header);
             this.Controls.Add(this.measuresPanel);
-            this.Controls.Add(this.welcome);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Controls.Add(this.welcomePanel);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Střihovátko";
-            this.welcome.ResumeLayout(false);
-            this.welcome.PerformLayout();
+            this.welcomePanel.ResumeLayout(false);
+            this.welcomePanel.PerformLayout();
             this.measuresPanel.ResumeLayout(false);
             this.measuresPanel.PerformLayout();
+            this.patternChoicePanel.ResumeLayout(false);
+            this.patternChoicePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.len_hips)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.len_knee)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circ_sleeve)).EndInit();
@@ -1013,11 +1016,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.height)).EndInit();
             this.nameAndNoteMeasures.ResumeLayout(false);
             this.nameAndNoteMeasures.PerformLayout();
-            this.patternChoicePanel.ResumeLayout(false);
-            this.patternChoicePanel.PerformLayout();
             this.viewerPanel.ResumeLayout(false);
             this.viewerPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1029,7 +1029,7 @@
         private System.Windows.Forms.Label welcomeText;
         private System.Windows.Forms.RadioButton updateMeasures;
         private System.Windows.Forms.RadioButton noUpdate;
-        private System.Windows.Forms.Panel welcome;
+        private System.Windows.Forms.Panel welcomePanel;
         private System.Windows.Forms.Panel measuresPanel;
         private System.Windows.Forms.Button save;
         private System.Windows.Forms.Button next2;
